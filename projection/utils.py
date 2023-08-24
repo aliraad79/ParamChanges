@@ -58,6 +58,10 @@ def add_to_ages(df):
     df["age"] += 1
     return df
 
+def add_to_record_age(df):
+    df["insurance_record"] += 1
+    return df
+
 
 def calculate_Bazneshasteha(
     bimehPardaz: pd.DataFrame, past_bazneshasteha: pd.DataFrame, formula
