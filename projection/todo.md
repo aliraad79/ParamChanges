@@ -1,0 +1,3 @@
+- [] Add az kar oftadeha
+- [] Add csv genaration(/ db genaration)
+- [] Check Why sandoghs is not broke? 
