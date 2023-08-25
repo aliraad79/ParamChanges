@@ -4,15 +4,19 @@ from formulas import basic_bazneshastegi_rule
 from report.reporter import Reporter
 
 # Bazneshasteha
-bazneshasteh = pd.read_excel("./csv/bazneshaste_bimepardaz_just_all.xlsx")
-bazneshasteh = add_death_rate(bazneshasteh)
+retired = pd.read_excel("./csv/bazneshaste_bimepardaz_just_all.xlsx")
+retired = add_death_rate(retired)
+# Azkaroftadeh
+azkaroftadeh = pd.read_excel("./csv/azkaroftadeh.xlsx")
+# Bazmandeh
+bazmandeh = pd.read_excel("./csv/bazmandeh.xlsx")
 # Bimeh pardazha
 bimehPardaz = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
 
 # =======================================
 # Assumtions:
 #       1. No new bimeh pardaz
-#       2. bimeh pardaz don't die
+#       2. Just retired people dies
 #       3. Inflation rate is static through years
 # =======================================
 
@@ -22,24 +26,31 @@ INFLATION_RATE = 0.46
 reporter = Reporter(cli=True, csv=True, db=True)
 
 year = 1400
-for i in range(10):
-    reporter.generate_report(bazneshasteh, bimehPardaz, year)
+for i in range(20):
+    reporter.generate_report(retired, azkaroftadeh, bazmandeh, bimehPardaz, year)
     # Inflation
-    bazneshasteh = add_inflation_to_salaries(bazneshasteh, INFLATION_RATE)
+    retired = add_inflation_to_salaries(retired, INFLATION_RATE)
+    azkaroftadeh = add_inflation_to_salaries(azkaroftadeh, INFLATION_RATE)
+    bazmandeh = add_inflation_to_salaries(bazmandeh, INFLATION_RATE)
     bimehPardaz = add_inflation_to_salaries(bimehPardaz, INFLATION_RATE)
 
     # Kills
-    bazneshasteh = calculate_deaths(bazneshasteh)
-    bazneshasteh = add_death_rate(bazneshasteh)
+    retired = calculate_deaths(retired)
+    retired = add_death_rate(retired)
 
     # Bazneshastegi
-    bazneshasteh = calculate_Bazneshasteha(
-        bimehPardaz, bazneshasteh, basic_bazneshastegi_rule
+    retired = calculate_retirments(
+        bimehPardaz, retired, basic_bazneshastegi_rule
     )
 
     # Aging
-    bazneshasteh = add_to_ages(bazneshasteh)
-    bazneshasteh = add_to_record_age(bazneshasteh)
+    retired = add_to_ages(retired)
+    retired = add_to_record_age(retired)
+    azkaroftadeh = add_to_ages(retired)
+    azkaroftadeh = add_to_record_age(retired)
+    bazmandeh = add_to_ages(bazmandeh)
+    bazmandeh = add_to_record_age(bazmandeh)
+
     bimehPardaz = add_to_ages(bimehPardaz)
     bimehPardaz = add_to_record_age(bimehPardaz)
 

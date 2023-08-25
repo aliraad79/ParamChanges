@@ -63,7 +63,7 @@ def add_to_record_age(df):
     return df
 
 
-def calculate_Bazneshasteha(
+def calculate_retirments(
     bimehPardaz: pd.DataFrame, past_bazneshasteha: pd.DataFrame, formula
 ):
     current_bazneshasteha = formula(bimehPardaz)
