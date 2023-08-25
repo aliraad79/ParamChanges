@@ -15,7 +15,7 @@ class Reporter:
 
         self.reports = []
 
-    def generate_report(self, retired, azkaroftadeh, bazmandeh, bimehPardaz, year):
+    def generate_report(self, retired, azkaroftadeh, bazmandeh, bimehPardaz, year, INSURANCE_FEE_FROM_SALARY):
         # Salary infos
         payment_obligation = (
             get_df_salary_sum(retired)
@@ -23,7 +23,9 @@ class Reporter:
             + get_df_salary_sum(bazmandeh)
         )
         people_income = get_df_salary_sum(bimehPardaz)
-        sandogh_income = convert_income_to_sandogh_income(people_income)
+        sandogh_income = convert_income_to_sandogh_income(people_income, INSURANCE_FEE_FROM_SALARY)
+
+        sandogh_inbalance = sandogh_income - payment_obligation
         # Populations
         bimehPardaz_population = bimehPardaz["number"].sum()
         obligated_population = (
@@ -39,6 +41,7 @@ class Reporter:
                 people_income,
                 sandogh_income,
                 bimehPardaz_population,
+                sandogh_inbalance,
                 year,
             )
         if self.csv:
@@ -47,6 +50,7 @@ class Reporter:
                 obligated_population,
                 sandogh_income,
                 bimehPardaz_population,
+                sandogh_inbalance,
                 year,
             )
         if self.db:
@@ -55,5 +59,6 @@ class Reporter:
                 obligated_population,
                 sandogh_income,
                 bimehPardaz_population,
+                sandogh_inbalance,
                 year,
             )

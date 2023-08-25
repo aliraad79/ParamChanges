@@ -15,6 +15,7 @@ class DBReporter:
         bazneshasteh_population,
         sandogh_income,
         bimehPardaz_population,
+        sandogh_inbalance,
         year,
     ):
         bazneshasteh_row = pd.DataFrame(
@@ -31,6 +32,7 @@ class DBReporter:
                 "alive": [bimehPardaz_population],
             }
         )
+        sandogh_inbalance_df = pd.DataFrame({"inbalance": [sandogh_inbalance]})
 
         bazneshasteh_row.to_sql(
             "bazneshaste",
@@ -44,3 +46,4 @@ class DBReporter:
             if_exists="append",
             dtype={"sandogh_income": DECIMAL()},
         )
+        sandogh_inbalance_df.to_sql("inbalance", self.engine, if_exists="append")

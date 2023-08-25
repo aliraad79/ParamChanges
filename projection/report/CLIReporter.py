@@ -10,6 +10,7 @@ class CLIReporter:
         people_income,
         sandogh_income,
         bimehPardaz_population,
+        sandogh_inbalance,
         year,
     ):
         self.print_seprated_red_line()
@@ -26,6 +27,12 @@ class CLIReporter:
         People Income  : {rial_to_hemat(people_income)} Hemat
         Sandogh Income : {rial_to_hemat(sandogh_income)} Hemat
         Alive Population:    {format_three_digit(bimehPardaz_population)} """
+        )
+        self.print_seprated_red_line()
+
+        print(
+            f"""Sandogh Inbalance:
+        Value  : {rial_to_hemat(sandogh_inbalance)} Hemat"""
         )
         self.print_seprated_red_line()
 
