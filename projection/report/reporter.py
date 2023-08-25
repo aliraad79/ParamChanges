@@ -3,6 +3,7 @@ from report.CSVReporter import CSVReporter
 from report.CLIReporter import CLIReporter
 from report.DBReporter import DBReporter
 
+
 class Reporter:
     def __init__(self, cli=False, csv=False, db=False) -> None:
         self.cli = cli
@@ -14,19 +15,27 @@ class Reporter:
 
         self.reports = []
 
-    def generate_report(self, bazneshasteh, bimehPardaz, year):
+    def generate_report(self, retired, azkaroftadeh, bazmandeh, bimehPardaz, year):
         # Salary infos
-        bazneshasteh_payment_obligation = get_df_salary_sum(bazneshasteh)
+        payment_obligation = (
+            get_df_salary_sum(retired)
+            + get_df_salary_sum(azkaroftadeh)
+            + get_df_salary_sum(bazmandeh)
+        )
         people_income = get_df_salary_sum(bimehPardaz)
         sandogh_income = convert_income_to_sandogh_income(people_income)
         # Populations
         bimehPardaz_population = bimehPardaz["number"].sum()
-        bazneshasteh_population = bazneshasteh["number"].sum()
+        obligated_population = (
+            retired["number"].sum()
+            + azkaroftadeh["number"].sum()
+            + bazmandeh["number"].sum()
+        )
 
         if self.cli:
             self.cliReporter.add_report(
-                bazneshasteh_payment_obligation,
-                bazneshasteh_population,
+                payment_obligation,
+                obligated_population,
                 people_income,
                 sandogh_income,
                 bimehPardaz_population,
@@ -34,16 +43,16 @@ class Reporter:
             )
         if self.csv:
             self.csvReporter.add_report(
-                bazneshasteh_payment_obligation,
-                bazneshasteh_population,
+                payment_obligation,
+                obligated_population,
                 sandogh_income,
                 bimehPardaz_population,
                 year,
             )
         if self.db:
             self.dbReporter.add_report(
-                bazneshasteh_payment_obligation,
-                bazneshasteh_population,
+                payment_obligation,
+                obligated_population,
                 sandogh_income,
                 bimehPardaz_population,
                 year,

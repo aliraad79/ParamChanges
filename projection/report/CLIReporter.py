@@ -15,7 +15,7 @@ class CLIReporter:
         self.print_seprated_red_line()
         print(f"     YEAR : {year}")
         print(
-            f"""Bazneshaste Report:
+            f"""Bazneshaste--Azkaroftadeh--Bazmandeh Report:
         Payment Obligation : {rial_to_hemat(bazneshasteh_payment_obligation)} Hemat
         Alive Population:    {format_three_digit(bazneshasteh_population)}"""
         )
