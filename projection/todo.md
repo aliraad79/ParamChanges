@@ -1,12 +1,12 @@
 - [x] Add az kar oftadeha and bazmandeha
 - [x] Add csv genaration(/ db genaration)
-- [] Change hage bimeh
+- [x] Change hage bimeh dynamic
 
 - [] Add sandogh's sarmaye
 - [] Check Why sandoghs is not broke? 
 
 # Next Stage
-- [] update/ request
+- [] update/ request (deprected)
 - [x] bimeh pardaz enter rate
 - [] bazmandeha limit salary rate
 - [] check latex
