@@ -1,5 +1,5 @@
-- [] Add az kar oftadeha
-- [] Add csv genaration(/ db genaration)
+- [x] Add az kar oftadeha and bazmandeha
+- [x] Add csv genaration(/ db genaration)
 - [] Change hage bimeh
 
 - [] Add sandogh's sarmaye
