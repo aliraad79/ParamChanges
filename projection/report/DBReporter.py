@@ -32,5 +32,5 @@ class DBReporter:
             }
         )
 
-        a = bazneshasteh_row.to_sql("bazneshaste", self.engine, if_exists="append")
-        b = bimeh_pardaz_row.to_sql("bimehpardaz", self.engine, if_exists="append")
+        bazneshasteh_row.to_sql("bazneshaste", self.engine, if_exists="append")
+        bimeh_pardaz_row.to_sql("bimehpardaz", self.engine, if_exists="append")
