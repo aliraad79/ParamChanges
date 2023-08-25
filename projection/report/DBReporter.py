@@ -1,5 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, DECIMAL
 
 
 class DBReporter:
@@ -32,5 +32,15 @@ class DBReporter:
             }
         )
 
-        bazneshasteh_row.to_sql("bazneshaste", self.engine, if_exists="append")
-        bimeh_pardaz_row.to_sql("bimehpardaz", self.engine, if_exists="append")
+        bazneshasteh_row.to_sql(
+            "bazneshaste",
+            self.engine,
+            if_exists="append",
+            dtype={"payment_obligation": DECIMAL()},
+        )
+        bimeh_pardaz_row.to_sql(
+            "bimehpardaz",
+            self.engine,
+            if_exists="append",
+            dtype={"sandogh_income": DECIMAL()},
+        )
