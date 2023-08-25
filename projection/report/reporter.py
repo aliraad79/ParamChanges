@@ -1,8 +1,7 @@
 from utils import *
-
-from CSVReporter import CSVReporter
-from CLIReporter import CLIReporter
-
+from report.CSVReporter import CSVReporter
+from report.CLIReporter import CLIReporter
+from report.DBReporter import DBReporter
 
 class Reporter:
     def __init__(self, cli=False, csv=False, db=False) -> None:
@@ -11,6 +10,7 @@ class Reporter:
         self.db = db
         self.csvReporter = CSVReporter()
         self.cliReporter = CLIReporter()
+        self.dbReporter = DBReporter()
 
         self.reports = []
 
@@ -40,8 +40,11 @@ class Reporter:
                 bimehPardaz_population,
                 year,
             )
-
-
-
-
-
+        if self.db:
+            self.dbReporter.add_report(
+                bazneshasteh_payment_obligation,
+                bazneshasteh_population,
+                sandogh_income,
+                bimehPardaz_population,
+                year,
+            )
