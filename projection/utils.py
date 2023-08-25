@@ -78,3 +78,15 @@ def calculate_retirments(
     merged = merged.drop(columns=["number_x", "number_y"])
 
     return merged
+
+
+def calculate_new_people(bimehPardaz: pd.DataFrame, rate):
+    row = pd.DataFrame(
+        {
+            "age": [bimehPardaz.iloc[0]["age"]],
+            "average_salary": [bimehPardaz.iloc[0]["average_salary"]],
+            "number": [bimehPardaz["number"].sum() * rate],
+            "insurance_record": [0],
+        }
+    )
+    return pd.concat([row, bimehPardaz], ignore_index=True)

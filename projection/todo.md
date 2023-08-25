@@ -4,3 +4,12 @@
 
 - [] Add sandogh's sarmaye
 - [] Check Why sandoghs is not broke? 
+
+# Next Stage
+- [] update/ request
+- [x] bimeh pardaz enter rate
+- [] bazmandeha limit salary rate
+- [] check latex
+
+- [] write report
+- [] powerpoint

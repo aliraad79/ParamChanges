@@ -17,12 +17,14 @@ bimehPardaz = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
 #       1. No new bimeh pardaz
 #       2. Just retired people dies
 #       3. Inflation rate is static through years
+#       4. Bamandeha and Azkaroftadeha is constant
 # =======================================
 
 # Start Simulation
-INFLATION_RATE = 0.0
-INSURANCE_FEE_FROM_SALARY = 0.8
-SIMULATION_YEARS = 20
+INFLATION_RATE = 0.23
+INSURANCE_FEE_FROM_SALARY = 0.75
+SIMULATION_YEARS = 15
+ADDED_PEAOPLE_RATE = 0.01
 #             40-50  50-60 60-70 70-80 80-90 90-
 DEATH_RATES = [0.01, 0.01, 0.01, 0.02, 0.03, 0.5]
 
@@ -45,6 +47,9 @@ for i in range(SIMULATION_YEARS):
 
     # Bazneshastegi
     retired = calculate_retirments(bimehPardaz, retired, basic_bazneshastegi_rule)
+
+    # New bimeh pardaz
+    bimehPardaz = calculate_new_people(bimehPardaz, ADDED_PEAOPLE_RATE)
 
     # Aging
     retired = add_to_ages(retired)
