@@ -29,7 +29,7 @@ class CLIReporter:
         )
         self.print_seprated_red_line()
 
-    def print_seprated_red_line():
+    def print_seprated_red_line(self):
         print(
             Fore.GREEN
             + "----------------------------------------------------------------"

@@ -1,27 +1,25 @@
 import pandas as pd
 from utils import *
 from formulas import basic_bazneshastegi_rule
-from report.report import Reporter
+from report.reporter import Reporter
 
 # Bazneshasteha
 bazneshasteh = pd.read_excel("./csv/bazneshaste_bimepardaz_just_all.xlsx")
 bazneshasteh = add_death_rate(bazneshasteh)
 # Bimeh pardazha
 bimehPardaz = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
-# ---------------------------------------------
-
-# Start Simulation
-INFLATION_RATE = 0.46
 
 # =======================================
 # Assumtions:
 #       1. No new bimeh pardaz
 #       2. bimeh pardaz don't die
 #       3. Inflation rate is static through years
-
 # =======================================
 
-reporter = Reporter(cli=True, csv=True)
+# Start Simulation
+INFLATION_RATE = 0.46
+
+reporter = Reporter(cli=True, csv=True, db=True)
 
 year = 1400
 for i in range(10):
