@@ -4,7 +4,7 @@ import pandas as pd
 ONE_HEMAT = 1_000_000_000_000
 
 
-def add_death_rate(df):
+def add_death_rate(df, death_percents):
     conditions = [
         (50 > df["age"]) & (df["age"] >= 40),
         (60 > df["age"]) & (df["age"] >= 50),
@@ -13,7 +13,6 @@ def add_death_rate(df):
         (90 > df["age"]) & (df["age"] >= 80),
         (df["age"] >= 90),
     ]
-    death_percents = [0.01, 0.02, 0.03, 0.25, 0.4, 0.5]
 
     df["death_percentage"] = np.select(conditions, death_percents)
     return df
@@ -29,8 +28,8 @@ def rial_to_hemat(number):
     return round(number / ONE_HEMAT, 3)
 
 
-def convert_income_to_sandogh_income(number):
-    return number * 0.3
+def convert_income_to_sandogh_income(number, RATE):
+    return number * RATE
 
 
 def format_three_digit(number):
