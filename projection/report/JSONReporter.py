@@ -18,12 +18,12 @@ class JSONReporter:
         self.memory[year] = {
             "bazneshasteh": {
                 "payment_obligation": rial_to_hemat(bazneshasteh_payment_obligation),
-                "alive_population": bazneshasteh_population,
+                "alive_population": int(bazneshasteh_population),
             },
             "bimehpardaz": {
                 "people_income": rial_to_hemat(people_income),
                 "sandogh_income": rial_to_hemat(sandogh_income),
-                "alive_population": bimehPardaz_population,
+                "alive_population": int(bimehPardaz_population),
             },
-            "inbalance": {"value": sandogh_inbalance},
+            "inbalance": {"value": int(rial_to_hemat(sandogh_inbalance))},
         }
