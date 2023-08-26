@@ -1,6 +1,5 @@
 import pandas as pd
 from utils import *
-from formulas import basic_bazneshastegi_rule
 from report.reporter import Reporter
 
 # =======================================
@@ -18,6 +17,7 @@ class MainClass:
     INSURANCE_FEE_FROM_SALARY = 0.75
     SIMULATION_YEARS = 15
     ADDED_PEAOPLE_RATE = 0.01
+    RETIREMENTMENT_AGE = 30
     #             40-50  50-60 60-70 70-80 80-90 90-
     DEATH_RATES = [0.01, 0.01, 0.01, 0.02, 0.03, 0.5]
 
@@ -50,7 +50,7 @@ class MainClass:
             self.retired = calculate_deaths(self.retired)
 
             # Bazneshastegi
-            self.retired = calculate_retirments(self.bimehPardaz, self.retired, basic_bazneshastegi_rule)
+            self.retired = calculate_retirments(self.bimehPardaz, self.retired, self.RETIREMENTMENT_AGE)
 
             # New bimeh pardaz
             self.bimehPardaz = calculate_new_people(self.bimehPardaz, self.ADDED_PEAOPLE_RATE)

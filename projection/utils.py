@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from formulas import basic_bazneshastegi_rule
 
 ONE_HEMAT = 1_000_000_000_000
 
@@ -63,9 +64,9 @@ def add_to_record_age(df):
 
 
 def calculate_retirments(
-    bimehPardaz: pd.DataFrame, past_bazneshasteha: pd.DataFrame, formula
+    bimehPardaz: pd.DataFrame, past_bazneshasteha: pd.DataFrame, RETIREMENTMENT_AGE
 ):
-    current_bazneshasteha = formula(bimehPardaz)
+    current_bazneshasteha = basic_bazneshastegi_rule(bimehPardaz, RETIREMENTMENT_AGE)
     bimehPardaz.drop(current_bazneshasteha.index, inplace=True)
 
     merged = pd.merge(
