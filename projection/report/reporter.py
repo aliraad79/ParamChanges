@@ -1,4 +1,4 @@
-from utils import *
+from calculations.utils import *
 from report.CSVReporter import CSVReporter
 from report.CLIReporter import CLIReporter
 from report.DBReporter import DBReporter

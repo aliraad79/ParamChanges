@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from formulas import basic_bazneshastegi_rule
+from .formulas import basic_bazneshastegi_rule
 
 ONE_HEMAT = 1_000_000_000_000
 

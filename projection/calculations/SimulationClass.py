@@ -1,5 +1,5 @@
 import pandas as pd
-from utils import *
+from .utils import *
 from report.reporter import Reporter
 
 # =======================================
@@ -11,7 +11,7 @@ from report.reporter import Reporter
 # =======================================
 
 
-class MainClass:
+class SimulationClass:
     # Paramethers
     INFLATION_RATE = 0.23
     INSURANCE_FEE_FROM_SALARY = 0.75
@@ -22,6 +22,19 @@ class MainClass:
     DEATH_RATES = [0.01, 0.01, 0.01, 0.02, 0.03, 0.5]
 
     def __init__(self) -> None:
+        # Bazneshasteha
+        self.retired = pd.read_excel("./csv/bazneshaste_bimepardaz_just_all.xlsx")
+        # Azkaroftadeh
+        self.azkaroftadeh = pd.read_excel("./csv/azkaroftadeh.xlsx")
+        # Bazmandeh
+        self.bazmandeh = pd.read_excel("./csv/bazmandeh.xlsx")
+        # Bimeh pardazha
+        self.bimehPardaz = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
+
+        self.reporter = Reporter(json=True)
+        self.year = 1400
+    
+    def reset(self):
         # Bazneshasteha
         self.retired = pd.read_excel("./csv/bazneshaste_bimepardaz_just_all.xlsx")
         # Azkaroftadeh
@@ -69,5 +82,5 @@ class MainClass:
             # NEXT year
             self.year += 1
     
-    def report(self):
-        print(self.reporter.jsonReporter.memory)
+    def json_report(self):
+        return self.reporter.jsonReporter.memory

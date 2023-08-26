@@ -1,5 +1,5 @@
 from colorama import Fore, Style
-from utils import rial_to_hemat, format_three_digit
+from calculations.utils import rial_to_hemat, format_three_digit
 
 
 class CLIReporter:

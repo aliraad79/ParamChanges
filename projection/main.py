@@ -1,6 +1,13 @@
-from MainClass import MainClass
+from fastapi import FastAPI
+from calculations.SimulationClass import SimulationClass
 
-actualMain = MainClass()
+app = FastAPI()
+mainClass = SimulationClass()
 
-actualMain.run()
-actualMain.report()
+
+@app.get("/")
+def read_item(skip: int = 0, limit: int = 10):
+    print(skip, limit)
+    mainClass.reset()
+    mainClass.run()
+    return mainClass.json_report()
