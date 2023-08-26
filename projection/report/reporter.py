@@ -2,20 +2,31 @@ from utils import *
 from report.CSVReporter import CSVReporter
 from report.CLIReporter import CLIReporter
 from report.DBReporter import DBReporter
+from report.JSONReporter import JSONReporter
 
 
 class Reporter:
-    def __init__(self, cli=False, csv=False, db=False) -> None:
+    def __init__(self, cli=False, csv=False, db=False, json=False) -> None:
         self.cli = cli
         self.csv = csv
         self.db = db
+        self.json = json
         self.csvReporter = CSVReporter()
         self.cliReporter = CLIReporter()
         self.dbReporter = DBReporter()
+        self.jsonReporter = JSONReporter()
 
         self.reports = []
 
-    def generate_report(self, retired, azkaroftadeh, bazmandeh, bimehPardaz, year, INSURANCE_FEE_FROM_SALARY):
+    def generate_report(
+        self,
+        retired,
+        azkaroftadeh,
+        bazmandeh,
+        bimehPardaz,
+        year,
+        INSURANCE_FEE_FROM_SALARY,
+    ):
         # Salary infos
         payment_obligation = (
             get_df_salary_sum(retired)
@@ -23,7 +34,9 @@ class Reporter:
             + get_df_salary_sum(bazmandeh)
         )
         people_income = get_df_salary_sum(bimehPardaz)
-        sandogh_income = convert_income_to_sandogh_income(people_income, INSURANCE_FEE_FROM_SALARY)
+        sandogh_income = convert_income_to_sandogh_income(
+            people_income, INSURANCE_FEE_FROM_SALARY
+        )
 
         sandogh_inbalance = sandogh_income - payment_obligation
         # Populations
@@ -57,6 +70,16 @@ class Reporter:
             self.dbReporter.add_report(
                 payment_obligation,
                 obligated_population,
+                sandogh_income,
+                bimehPardaz_population,
+                sandogh_inbalance,
+                year,
+            )
+        if self.json:
+            self.jsonReporter.add_report(
+                payment_obligation,
+                obligated_population,
+                people_income,
                 sandogh_income,
                 bimehPardaz_population,
                 sandogh_inbalance,
