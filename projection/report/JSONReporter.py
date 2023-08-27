@@ -25,6 +25,6 @@ class JSONReporter:
                 "bimehpardaz_income": rial_to_hemat(people_income),
                 "bimehpardaz_sandogh_income": rial_to_hemat(sandogh_income),
                 "bimehpardaz_alive_population": int(bimehPardaz_population),
-                "inbalance": int(rial_to_hemat(sandogh_inbalance)),
+                "inbalance": rial_to_hemat(sandogh_inbalance),
             }
         )
