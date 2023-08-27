@@ -1,0 +1,74 @@
+{
+    "sourceFile": "projection/todo.md",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1693142084735,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1693142095652,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,7 @@\n - [] check latex\r\n \r\n - [] write report\r\n - [] powerpoint\r\n-# next\n\\ No newline at end of file\n+# next\r\n+- [] death r\r\n+- [] powerpoint\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142107771,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,18 @@\n+- [x] Add az kar oftadeha and bazmandeha\r\n+- [x] Add csv genaration(/ db genaration)\r\n+- [x] Change hage bimeh dynamic\r\n+\r\n+- [] Add sandogh's sarmaye\r\n+- [] Check Why sandoghs is not broke? \r\n+\r\n+# Next Stage\r\n+- [] update/ request (deprected)\r\n+- [x] bimeh pardaz enter rate\r\n+- [] bazmandeha limit salary rate\r\n+- [] check latex\r\n+\r\n+- [] write report\r\n+- [] powerpoint\r\n+# next\r\n+- [] death rate -> bazneshaste tedad\r\n+- [] powerpoint\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142113066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,18 @@\n+- [x] Add az kar oftadeha and bazmandeha\r\n+- [x] Add csv genaration(/ db genaration)\r\n+- [x] Change hage bimeh dynamic\r\n+\r\n+- [] Add sandogh's sarmaye\r\n+- [] Check Why sandoghs is not broke? \r\n+\r\n+# Next Stage\r\n+- [] update/ request (deprected)\r\n+- [x] bimeh pardaz enter rate\r\n+- [] bazmandeha limit salary rate\r\n+- [] check latex\r\n+\r\n+- [] write report\r\n+- [] powerpoint\r\n+# next\r\n+- [] death rate -> bazneshaste tedad\r\n+- [] \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142144725,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,41 +14,5 @@\n - [] write report\r\n - [] powerpoint\r\n # next\r\n - [] death rate -> bazneshaste tedad\r\n-- [] \n-- [x] Add az kar oftadeha and bazmandeha\r\n-- [x] Add csv genaration(/ db genaration)\r\n-- [x] Change hage bimeh dynamic\r\n-\r\n-- [] Add sandogh's sarmaye\r\n-- [] Check Why sandoghs is not broke? \r\n-\r\n-# Next Stage\r\n-- [] update/ request (deprected)\r\n-- [x] bimeh pardaz enter rate\r\n-- [] bazmandeha limit salary rate\r\n-- [] check latex\r\n-\r\n-- [] write report\r\n-- [] powerpoint\r\n-# next\r\n-- [] death rate -> bazneshaste tedad\r\n-- [] powerpoint\n-- [x] Add az kar oftadeha and bazmandeha\r\n-- [x] Add csv genaration(/ db genaration)\r\n-- [x] Change hage bimeh dynamic\r\n-\r\n-- [] Add sandogh's sarmaye\r\n-- [] Check Why sandoghs is not broke? \r\n-\r\n-# Next Stage\r\n-- [] update/ request (deprected)\r\n-- [x] bimeh pardaz enter rate\r\n-- [] bazmandeha limit salary rate\r\n-- [] check latex\r\n-\r\n-- [] write report\r\n-- [] powerpoint\r\n-# next\r\n-- [] death r\r\n-- [] powerpoint\n\\ No newline at end of file\n+- [] added rate based exel\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142159776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,5 @@\n - [] write report\r\n - [] powerpoint\r\n # next\r\n - [] death rate -> bazneshaste tedad\r\n-- [] added rate based exel\n\\ No newline at end of file\n+- [] added rate based exel\r\n"
+                },
+                {
+                    "date": 1693142164860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,4 +15,5 @@\n - [] powerpoint\r\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n+-[]addition \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142177590,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,5 @@\n - [] powerpoint\r\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n--[]addition \n\\ No newline at end of file\n+-[]addition remove bazmande from database\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142202347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,5 @@\n - [] powerpoint\r\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n--[]addition remove bazmande from database\n\\ No newline at end of file\n+-[]addition remove bazmande from database\r\n"
+                },
+                {
+                    "date": 1693142210926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,5 @@\n - [] powerpoint\r\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n--[]addition remove bazmande from database\r\n+-[]addition remove bazmande from database\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142217352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,5 @@\n - [] powerpoint\r\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n--[]addition remove bazmande from database\n\\ No newline at end of file\n+-[] addition remove bazmande from database\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142237831,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,6 @@\n - [] powerpoint\r\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n--[] addition remove bazmande from database\n\\ No newline at end of file\n+-[] addition remove bazmande from database\r\n+-\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142244311,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,5 +16,5 @@\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n -[] addition remove bazmande from database\r\n--\n\\ No newline at end of file\n+-[]2:30 \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142250827,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,5 +16,5 @@\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n -[] addition remove bazmande from database\r\n--[]2:30 \n\\ No newline at end of file\n+-[] \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1693142257728,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,5 +16,5 @@\n # next\r\n - [] death rate -> bazneshaste tedad\r\n - [] added rate based exel\r\n -[] addition remove bazmande from database\r\n--[] \n\\ No newline at end of file\n+-[] shab saat 1\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1693142084735,
+            "name": "Commit-0",
+            "content": "- [x] Add az kar oftadeha and bazmandeha\r\n- [x] Add csv genaration(/ db genaration)\r\n- [x] Change hage bimeh dynamic\r\n\r\n- [] Add sandogh's sarmaye\r\n- [] Check Why sandoghs is not broke? \r\n\r\n# Next Stage\r\n- [] update/ request (deprected)\r\n- [x] bimeh pardaz enter rate\r\n- [] bazmandeha limit salary rate\r\n- [] check latex\r\n\r\n- [] write report\r\n- [] powerpoint\r\n# next"
+        }
+    ]
+}

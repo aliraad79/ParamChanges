@@ -13,3 +13,8 @@
 
 - [] write report
 - [] powerpoint
+# next
+- [] death rate -> bazneshaste tedad
+- [] added rate based exel
+-[] addition remove bazmande from database
+-[] shab saat 10 -11
