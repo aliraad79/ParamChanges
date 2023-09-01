@@ -52,8 +52,9 @@ def add_inflation_to_salaries(df: pd.DataFrame, rate: int):
 
 
 def calculate_deaths(df: pd.DataFrame):
+    deads_number = (df["number"] * df["death_percentage"]).sum()
     df["number"] = (df["number"] * (1 - df["death_percentage"])).astype(int)
-    return df
+    return df, deads_number
 
 
 def add_to_ages(df):
@@ -105,3 +106,19 @@ def calculate_new_people(
         }
     )
     return pd.concat([row, bimehPardaz], ignore_index=True)
+
+
+def add_to_bazmandeh(bazmandeh: pd.DataFrame, deads_number: int, rate):
+    row = pd.DataFrame(
+        {
+            "age": [bazmandeh.iloc[0]["age"]],
+            "average_salary": [bazmandeh.iloc[0]["average_salary"]],
+            "number": [deads_number * rate],
+            "insurance_record": [0],
+        }
+    )
+    return pd.concat([row, bazmandeh], ignore_index=True)
+
+
+def remove_bazmandeh_from_payrool(df: pd.DataFrame, final_year_of_payrool):
+    return df.loc[df['insurance_record'] <= final_year_of_payrool]

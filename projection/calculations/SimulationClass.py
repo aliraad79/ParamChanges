@@ -1,5 +1,6 @@
 import pandas as pd
 from .utils import *
+from .config import default_config
 from report.reporter import Reporter
 
 # =======================================
@@ -10,15 +11,6 @@ from report.reporter import Reporter
 #       4. Bamandeha and Azkaroftadeha is constant
 #       5. People Die at age of 100
 # =======================================
-
-default_config = {
-    "INFLATION_RATE": 0.23,
-    "INSURANCE_FEE_FROM_SALARY": 0.30,
-    "SIMULATION_YEARS": 15,
-    "ADDED_PEAOPLE_RATE": 0.6 * 0.37,
-    "RETIREMENTMENT_AGE": 30,
-    "BASIC_RETIRMENT_STRATEGY": True,
-}
 
 
 class SimulationClass:
@@ -39,6 +31,9 @@ class SimulationClass:
         self.added_people_rate = config["ADDED_PEAOPLE_RATE"]
         self.retirement_age = config["RETIREMENTMENT_AGE"]
         self.basic_retirment_strategy = config["BASIC_RETIRMENT_STRATEGY"]
+        self.proposed_bazmandeh_strategy = config["PROPOSED_BAZMANDEH_STRATEGY"]
+        self.death_to_bazmandeh_rate = config["DEATH_TO_BAZMANDEH_RATE"]
+        self.bazmandeh_final_year_of_payrool = config["BAZMANDEH_FINAL_YEAR_OF_PAYROOL"]
 
     def load_csvs(self):
         # Bazneshasteha
@@ -79,7 +74,17 @@ class SimulationClass:
 
             # Kills
             self.retired = add_death_rate(self.retired, self.DEATH_RATES)
-            self.retired = calculate_deaths(self.retired)
+            self.retired, deads_number = calculate_deaths(self.retired)
+            # new bazmandeh
+            self.bazmandeh = add_to_bazmandeh(
+                self.bazmandeh, deads_number, self.death_to_bazmandeh_rate
+            )
+
+            # Proposed bazmandeh strategy
+            if self.proposed_bazmandeh_strategy:
+                self.bazmandeh = remove_bazmandeh_from_payrool(
+                    self.bazmandeh, self.bazmandeh_final_year_of_payrool
+                )
 
             # Bazneshastegi
             self.retired = calculate_retirments(
