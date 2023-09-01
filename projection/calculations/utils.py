@@ -3,6 +3,7 @@ import pandas as pd
 from .formulas import basic_bazneshastegi_rule
 
 ONE_HEMAT = 1_000_000_000_000
+ONE_HUNDERD = 1_000
 
 
 def add_death_rate(df, death_percents):
@@ -12,7 +13,8 @@ def add_death_rate(df, death_percents):
         (70 > df["age"]) & (df["age"] >= 60),
         (80 > df["age"]) & (df["age"] >= 70),
         (90 > df["age"]) & (df["age"] >= 80),
-        (df["age"] >= 90),
+        (100 > df["age"]) & (df["age"] >= 90),
+        (df["age"] >= 100),
     ]
 
     df["death_percentage"] = np.select(conditions, death_percents)
@@ -98,7 +100,7 @@ def calculate_new_people(
         {
             "age": [bimehPardaz.iloc[0]["age"]],
             "average_salary": [bimehPardaz.iloc[0]["average_salary"]],
-            "number": [population_diffrence * rate],
+            "number": [population_diffrence * rate * ONE_HUNDERD],
             "insurance_record": [0],
         }
     )
