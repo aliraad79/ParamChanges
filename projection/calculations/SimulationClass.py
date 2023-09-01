@@ -8,6 +8,7 @@ from report.reporter import Reporter
 #       2. Just retired people dies
 #       3. Inflation rate is static through years
 #       4. Bamandeha and Azkaroftadeha is constant
+#       5. People Die at age of 100
 # =======================================
 
 default_config = {
@@ -16,12 +17,13 @@ default_config = {
     "SIMULATION_YEARS": 15,
     "ADDED_PEAOPLE_RATE": 0.6 * 0.37,
     "RETIREMENTMENT_AGE": 30,
+    "BASIC_RETIRMENT_STRATEGY": True,
 }
 
 
 class SimulationClass:
-    #             40-50  50-60 60-70 70-80 80-90 90-
-    DEATH_RATES = [0.01, 0.01, 0.01, 0.02, 0.03, 0.5]
+    #             40-50  50-60 60-70 70-80 80-90 90-100 100-*
+    DEATH_RATES = [0.01, 0.01, 0.01, 0.02, 0.03, 0.5, 1]
 
     def __init__(self, config=default_config) -> None:
         self.load_csvs()
@@ -36,6 +38,7 @@ class SimulationClass:
         self.simulation_years = config["SIMULATION_YEARS"]
         self.added_people_rate = config["ADDED_PEAOPLE_RATE"]
         self.retirement_age = config["RETIREMENTMENT_AGE"]
+        self.basic_retirment_strategy = config["BASIC_RETIRMENT_STRATEGY"]
 
     def load_csvs(self):
         # Bazneshasteha
@@ -48,7 +51,9 @@ class SimulationClass:
         self.bimehPardaz = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
         # Projection for population
         self.population_projection = pd.read_excel("./csv/population_projection.xlsx")
-        self.population_projection['population'] = self.population_projection['population'].diff()
+        self.population_projection["population"] = self.population_projection[
+            "population"
+        ].diff()
 
     def run(self):
         for i in range(self.simulation_years):
@@ -102,6 +107,9 @@ class SimulationClass:
 
             # NEXT year
             self.year += 1
+
+            if not self.basic_retirment_strategy:
+                self.retirement_age += 0.5
 
     def json_report(self):
         return self.reporter.jsonReporter.memory

@@ -9,8 +9,9 @@ def read_item(
     inflation_rate: float = 0.46,
     insurance_fee_from_salary: float = 0.3,
     simulation_years: int = 20,
-    added_people_rate: float = 0.01,
+    added_people_rate: float = 0.6 * 0.37,
     retirment_age: int = 30,
+    basic_retirment_strategy: bool = True,
 ):
     config = {
         "INFLATION_RATE": inflation_rate,
@@ -18,6 +19,7 @@ def read_item(
         "SIMULATION_YEARS": simulation_years,
         "ADDED_PEAOPLE_RATE": added_people_rate,
         "RETIREMENTMENT_AGE": retirment_age,
+        "BASIC_RETIRMENT_STRATEGY": basic_retirment_strategy,
     }
     mainClass = SimulationClass(config)
     mainClass.run()
