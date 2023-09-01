@@ -12,6 +12,12 @@
 - [x] addition remove bazmande from database -> Add bazmendeh csv from bimeh reports
 - [x] Add advance bazneshastegy strategy
 
+- [] Seprate bazneshasteh and azkaroftadeh
+- [] Fix rate of population after 1430 -> every year a fixed precentage descrease in population
+- [] get death rate from statics -> for death of bazneshasteha
+- [] add death rate to added people new
+- [] why we have so much less income for sandagh and so much less payment obligation
+
 - [] Add sandogh's sarmaye -> have a base capital that is decreased through years
 
 # Reports
