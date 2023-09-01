@@ -14,7 +14,7 @@ default_config = {
     "INFLATION_RATE": 0.23,
     "INSURANCE_FEE_FROM_SALARY": 0.30,
     "SIMULATION_YEARS": 15,
-    "ADDED_PEAOPLE_RATE": 0.01,
+    "ADDED_PEAOPLE_RATE": 0.6 * 0.37,
     "RETIREMENTMENT_AGE": 30,
 }
 
@@ -24,6 +24,20 @@ class SimulationClass:
     DEATH_RATES = [0.01, 0.01, 0.01, 0.02, 0.03, 0.5]
 
     def __init__(self, config=default_config) -> None:
+        self.load_csvs()
+        self.load_config(config)
+
+        self.reporter = Reporter(json=True, cli=True)
+        self.year = 1400
+
+    def load_config(self, config):
+        self.inflation_rate = config["INFLATION_RATE"]
+        self.insurance_fee_from_salary = config["INSURANCE_FEE_FROM_SALARY"]
+        self.simulation_years = config["SIMULATION_YEARS"]
+        self.added_people_rate = config["ADDED_PEAOPLE_RATE"]
+        self.retirement_age = config["RETIREMENTMENT_AGE"]
+
+    def load_csvs(self):
         # Bazneshasteha
         self.retired = pd.read_excel("./csv/bazneshaste_bimepardaz_just_all.xlsx")
         # Azkaroftadeh
@@ -32,15 +46,9 @@ class SimulationClass:
         self.bazmandeh = pd.read_excel("./csv/bazmandeh.xlsx")
         # Bimeh pardazha
         self.bimehPardaz = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
-
-        self.reporter = Reporter(json=True)
-        self.year = 1400
-
-        self.inflation_rate = config["INFLATION_RATE"]
-        self.insurance_fee_from_salary = config["INSURANCE_FEE_FROM_SALARY"]
-        self.simulation_years = config["SIMULATION_YEARS"]
-        self.added_people_rate = config["ADDED_PEAOPLE_RATE"]
-        self.retirement_age = config["RETIREMENTMENT_AGE"]
+        # Projection for population
+        self.population_projection = pd.read_excel("./csv/population_projection.xlsx")
+        self.population_projection['population'] = self.population_projection['population'].diff()
 
     def run(self):
         for i in range(self.simulation_years):
@@ -75,7 +83,10 @@ class SimulationClass:
 
             # New bimeh pardaz
             self.bimehPardaz = calculate_new_people(
-                self.bimehPardaz, self.added_people_rate
+                self.population_projection,
+                self.bimehPardaz,
+                self.added_people_rate,
+                self.year,
             )
 
             # Aging

@@ -58,6 +58,7 @@ def add_to_ages(df):
     df["age"] += 1
     return df
 
+
 def add_to_record_age(df):
     df["insurance_record"] += 1
     return df
@@ -81,12 +82,23 @@ def calculate_retirments(
     return merged
 
 
-def calculate_new_people(bimehPardaz: pd.DataFrame, rate):
+def calculate_new_people(
+    population_projection_in_milion: pd.DataFrame, bimehPardaz: pd.DataFrame, rate, year
+):
+    population_diffrence = population_projection_in_milion.loc[
+        population_projection_in_milion["year"] == year
+    ].get("population")
+
+    if population_diffrence.isnull().values.any():
+        population_diffrence = 0
+    else:
+        population_diffrence = population_diffrence.item()
+
     row = pd.DataFrame(
         {
             "age": [bimehPardaz.iloc[0]["age"]],
             "average_salary": [bimehPardaz.iloc[0]["average_salary"]],
-            "number": [bimehPardaz["number"].sum() * rate],
+            "number": [population_diffrence * rate],
             "insurance_record": [0],
         }
     )
