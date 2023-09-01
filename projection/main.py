@@ -16,6 +16,9 @@ def read_item(
     basic_retirment_strategy: bool = default_config["BASIC_RETIRMENT_STRATEGY"],
     proposed_bazmandeh_strategy: bool = default_config["PROPOSED_BAZMANDEH_STRATEGY"],
     death_to_bazmandeh_rate: bool = default_config["DEATH_TO_BAZMANDEH_RATE"],
+    bazmandeh_final_yaer_of_payrool: int = default_config[
+        "BAZMANDEH_FINAL_YEAR_OF_PAYROOL"
+    ],
 ):
     config = {
         "INFLATION_RATE": inflation_rate,
@@ -26,6 +29,7 @@ def read_item(
         "BASIC_RETIRMENT_STRATEGY": basic_retirment_strategy,
         "PROPOSED_BAZMANDEH_STRATEGY": proposed_bazmandeh_strategy,
         "DEATH_TO_BAZMANDEH_RATE": death_to_bazmandeh_rate,
+        "BAZMANDEH_FINAL_YEAR_OF_PAYROOL": bazmandeh_final_yaer_of_payrool,
     }
     mainClass = SimulationClass(config)
     mainClass.run()
