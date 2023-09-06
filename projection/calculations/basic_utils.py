@@ -1,3 +1,4 @@
+import pandas as pd
 ONE_HEMAT = 1_000_000_000_000
 
 def get_df_salary_sum(df):

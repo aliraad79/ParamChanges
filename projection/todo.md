@@ -14,11 +14,13 @@
 
 - [x] Seprate bazneshasteh and azkaroftadeh
 - [x] Fix rate of population after 1430 -> every year a fixed precentage descrease in population
-- [] get death rate from statics -> for death of bazneshasteha
-- [] add death rate to added people new
-- [] why we have so much less income for sandagh and so much less payment obligation
+- [x] add death rate to added people new
 
 - [] Add sandogh's sarmaye -> have a base capital that is decreased through years
+
+## Pending
+- [] get death rate from statics -> for death of bazneshasteha
+- [] why we have so much less income for sandagh and so much less payment obligation
 
 # Reports
 - [] check latex
