@@ -18,7 +18,8 @@ class JSONReporter:
         bimehPardaz_population,
         sandogh_inbalance,
         year,
-        deads_number
+        deads_number,
+        new_added_population
     ):
         report = {
             "year": year,
@@ -35,6 +36,7 @@ class JSONReporter:
                 retired_population + azkaroftadeh_population + bazmandeh_population
             ),
             "deads_number": int(deads_number),
+            "new_population": int(new_added_population),
             "bimehpardaz_income": rial_to_hemat(people_income),
             "bimehpardaz_sandogh_income": rial_to_hemat(sandogh_income),
             "bimehpardaz_alive_population": int(bimehPardaz_population),

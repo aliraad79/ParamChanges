@@ -54,15 +54,16 @@ def calculate_new_people(
     else:
         population_diffrence = population_diffrence.item()
 
+    new_population = population_diffrence * rate * ONE_HUNDERD
     row = pd.DataFrame(
         {
             "age": [bimehPardaz.iloc[0]["age"]],
             "average_salary": [bimehPardaz.iloc[0]["average_salary"]],
-            "number": [population_diffrence * rate * ONE_HUNDERD],
+            "number": [new_population],
             "insurance_record": [0],
         }
     )
-    return pd.concat([row, bimehPardaz], ignore_index=True)
+    return pd.concat([row, bimehPardaz], ignore_index=True), new_population
 
 
 def add_to_bazmandeh(bazmandeh: pd.DataFrame, deads_number: int, rate):

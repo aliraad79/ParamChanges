@@ -24,6 +24,7 @@ class SimulationClass:
 
         self.reporter = Reporter(cli=cli, csv=csv, db=db)
         self.deads_number = 0
+        self.new_added_population = 0
         self.year = 1400
 
     def load_config(self, config):
@@ -61,7 +62,8 @@ class SimulationClass:
                 self.bimehPardaz,
                 self.year,
                 self.insurance_fee_from_salary,
-                self.deads_number
+                self.deads_number,
+                self.new_added_population
             )
             # Inflation
             self.retired = add_inflation_to_salaries(self.retired, self.inflation_rate)
@@ -95,7 +97,7 @@ class SimulationClass:
             )
 
             # New bimeh pardaz
-            self.bimehPardaz = calculate_new_people(
+            self.bimehPardaz, self.new_added_population = calculate_new_people(
                 self.population_projection,
                 self.bimehPardaz,
                 self.added_people_rate,
