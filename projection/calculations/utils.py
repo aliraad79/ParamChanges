@@ -18,7 +18,7 @@ def add_death_rate(df, death_percents):
         (74 > df["age"]) & (df["age"] >= 70),
         (79 > df["age"]) & (df["age"] >= 74),
         (99 > df["age"]) & (df["age"] >= 80),
-        (df["age"] >= 100)
+        (df["age"] >= 100),
     ]
 
     df["death_percentage"] = np.select(conditions, death_percents)
@@ -46,10 +46,11 @@ def calculate_retirments(
 def calculate_new_people(
     population_projection_in_milion: pd.DataFrame,
     bimehPardaz: pd.DataFrame,
+    population_df: pd.DataFrame,
     rate,
     year,
     dead_people,
-    new_people_age
+    new_people_age,
 ):
     population_diffrence = population_projection_in_milion.loc[
         population_projection_in_milion["year"] == year
@@ -60,16 +61,29 @@ def calculate_new_people(
     else:
         population_diffrence = population_diffrence.item()
 
-    new_population = ((population_diffrence) * rate * ONE_HUNDERD) + dead_people
+    new_population = (population_diffrence * ONE_HUNDERD) + dead_people
+    new_borns = pd.DataFrame(
+        {
+            "age": [0],
+            "number": [new_population],
+        }
+    )
+
+    added_population = (
+        population_df.loc[population_df["age"] == new_people_age].get("number")
+    ) * rate
     row = pd.DataFrame(
         {
             "age": [new_people_age],
             "average_salary": [bimehPardaz.iloc[0]["average_salary"]],
-            "number": [new_population],
+            "number": [added_population],
             "insurance_record": [0],
         }
     )
-    return pd.concat([row, bimehPardaz], ignore_index=True), new_population
+
+    return pd.concat([row, bimehPardaz], ignore_index=True), pd.concat(
+        [new_borns, population_df], ignore_index=True
+    )
 
 
 def add_to_bazmandeh(bazmandeh: pd.DataFrame, deads_number: int, rate):

@@ -19,7 +19,8 @@ class JSONReporter:
         sandogh_inbalance,
         year,
         deads_number,
-        new_added_population
+        new_added_population,
+        population
     ):
         report = {
             "year": year,
@@ -41,6 +42,7 @@ class JSONReporter:
             "bimehpardaz_sandogh_income": rial_to_hemat(sandogh_income),
             "bimehpardaz_alive_population": int(bimehPardaz_population),
             "inbalance": rial_to_hemat(sandogh_inbalance),
+            "all_population" : int(population)
         }
         self.memory.append(report)
 

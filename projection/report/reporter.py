@@ -29,6 +29,7 @@ class Reporter:
         INSURANCE_FEE_FROM_SALARY,
         deads_number,
         new_added_population,
+        population_df
     ):
         # Salary infos
         retired_obligation = get_df_salary_sum(retired)
@@ -48,6 +49,7 @@ class Reporter:
         retired_population = retired["number"].sum()
         azkaroftadeh_population = azkaroftadeh["number"].sum()
         bazmandeh_population = bazmandeh["number"].sum()
+        population = population_df['number'].sum()
 
         report_as_json = self.jsonReporter.add_report(
             retired_obligation,
@@ -63,6 +65,7 @@ class Reporter:
             year,
             deads_number,
             new_added_population,
+            population
         )
 
         self.humanJsonReporter.add_report(
@@ -79,6 +82,7 @@ class Reporter:
             year,
             deads_number,
             new_added_population,
+            population
         )
 
         if self.cli:

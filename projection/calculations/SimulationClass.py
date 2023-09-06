@@ -15,24 +15,24 @@ pd.set_option("display.width", 1000)
 #       3. Inflation rate is static through years
 #       4. Bamandeha and Azkaroftadeha is constant
 #       5. People Die at age of 100
+#       6. new people start at avarge of 30
 # =======================================
 
 
 class SimulationClass:
-    #             30-34  35-39   40-44  45-49  50-54  54-59  60-64  64-69  70-74  75-79  80-100 100-*
     DEATH_RATES = [
-        0.001,
-        0.001,
-        0.002,
-        0.003,
-        0.006,
-        0.011,
-        0.018,
-        0.029,
-        0.048,
-        0.079,
-        0.15,
-        0.5,
+        0.001,  # 30-34
+        0.001,  # 35-39
+        0.002,  # 40-44
+        0.003,  # 45-49
+        0.006,  # 50-54
+        0.011,  # 54-59
+        0.018,  # 60-64
+        0.029,  # 64-69
+        0.048,  # 70-74
+        0.079,  # 75-79
+        0.15,  # 80-100
+        0.5,  # 100-*
     ]
 
     def __init__(self, config=default_config, cli=False, csv=False, db=False) -> None:
@@ -70,6 +70,8 @@ class SimulationClass:
         self.population_projection["population"] = self.population_projection[
             "population"
         ].diff()
+        # Current population
+        self.population = pd.read_excel("./csv/population.xlsx")
 
     def run(self):
         for i in range(self.simulation_years):
@@ -82,8 +84,8 @@ class SimulationClass:
                 self.insurance_fee_from_salary,
                 self.deads_number,
                 self.new_added_population,
+                self.population,
             )
-            print(self.bimehPardaz)
             # Inflation
             self.retired = add_inflation_to_salaries(self.retired, self.inflation_rate)
             self.azkaroftadeh = add_inflation_to_salaries(
@@ -116,14 +118,16 @@ class SimulationClass:
             )
 
             # New bimeh pardaz
-            self.bimehPardaz, self.new_added_population = calculate_new_people(
+            self.bimehPardaz, self.population = calculate_new_people(
                 self.population_projection,
                 self.bimehPardaz,
+                self.population,
                 self.added_people_rate,
                 self.year,
                 int(self.deads_number),
-                self.new_people_age
+                self.new_people_age,
             )
+            self.new_added_population = self.population.iloc[0].get("number")
 
             # Aging
             self.retired = add_to_ages(self.retired)
@@ -135,6 +139,8 @@ class SimulationClass:
 
             self.bimehPardaz = add_to_ages(self.bimehPardaz)
             self.bimehPardaz = add_to_record_age(self.bimehPardaz)
+
+            self.population = add_to_ages(self.population)
 
             # NEXT year
             self.year += 1

@@ -20,6 +20,7 @@ class HumanJSONReporter:
         year,
         deads_number,
         new_added_population,
+        population,
     ):
         report = {
             "year": year,
@@ -55,6 +56,7 @@ class HumanJSONReporter:
             },
             "deads_number": int(deads_number),
             "new_population": int(new_added_population),
+            "all_population": int(population),
         }
         self.memory.append(report)
 
