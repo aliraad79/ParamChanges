@@ -26,10 +26,10 @@ def add_death_rate(df, death_percents):
 
 
 def calculate_retirments(
-    bimehPardaz: pd.DataFrame, past_bazneshasteha: pd.DataFrame, RETIREMENTMENT_AGE
+    insured: pd.DataFrame, past_bazneshasteha: pd.DataFrame, RETIREMENTMENT_AGE
 ):
-    current_bazneshasteha = basic_bazneshastegi_rule(bimehPardaz, RETIREMENTMENT_AGE)
-    bimehPardaz.drop(current_bazneshasteha.index, inplace=True)
+    current_bazneshasteha = basic_bazneshastegi_rule(insured, RETIREMENTMENT_AGE)
+    insured.drop(current_bazneshasteha.index, inplace=True)
 
     merged = pd.merge(
         past_bazneshasteha,
@@ -45,7 +45,7 @@ def calculate_retirments(
 
 def calculate_new_people(
     population_projection_in_milion: pd.DataFrame,
-    bimehPardaz: pd.DataFrame,
+    insured: pd.DataFrame,
     population_df: pd.DataFrame,
     rate,
     year,
@@ -75,28 +75,28 @@ def calculate_new_people(
     row = pd.DataFrame(
         {
             "age": [new_people_age],
-            "average_salary": [bimehPardaz.iloc[0]["average_salary"]],
+            "average_salary": [insured.iloc[0]["average_salary"]],
             "number": [added_population],
             "insurance_record": [0],
         }
     )
 
-    return pd.concat([row, bimehPardaz], ignore_index=True), pd.concat(
+    return pd.concat([row, insured], ignore_index=True), pd.concat(
         [new_borns, population_df], ignore_index=True
     )
 
 
-def add_to_bazmandeh(bazmandeh: pd.DataFrame, deads_number: int, rate):
+def add_to_survivor(survivor: pd.DataFrame, deads_number: int, rate):
     row = pd.DataFrame(
         {
-            "age": [bazmandeh.iloc[0]["age"]],
-            "average_salary": [bazmandeh.iloc[0]["average_salary"]],
+            "age": [survivor.iloc[0]["age"]],
+            "average_salary": [survivor.iloc[0]["average_salary"]],
             "number": [deads_number * rate],
             "insurance_record": [0],
         }
     )
-    return pd.concat([row, bazmandeh], ignore_index=True)
+    return pd.concat([row, survivor], ignore_index=True)
 
 
-def remove_bazmandeh_from_payrool(df: pd.DataFrame, final_year_of_payrool):
+def remove_survivor_from_payrool(df: pd.DataFrame, final_year_of_payrool):
     return df.loc[df["insurance_record"] <= final_year_of_payrool]

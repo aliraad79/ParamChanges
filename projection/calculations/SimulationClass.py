@@ -48,12 +48,12 @@ class SimulationClass:
         self.inflation_rate = config["INFLATION_RATE"]
         self.insurance_fee_from_salary = config["INSURANCE_FEE_FROM_SALARY"]
         self.simulation_years = config["SIMULATION_YEARS"]
-        self.added_people_rate = config["ADDED_PEAOPLE_RATE"]
+        self.added_people_rate = config["EMPLOYED_AND_INSURED_RATE"]
         self.retirement_age = config["RETIREMENTMENT_AGE"]
         self.basic_retirment_strategy = config["BASIC_RETIRMENT_STRATEGY"]
-        self.proposed_bazmandeh_strategy = config["PROPOSED_BAZMANDEH_STRATEGY"]
-        self.death_to_bazmandeh_rate = config["DEATH_TO_BAZMANDEH_RATE"]
-        self.bazmandeh_final_year_of_payrool = config["BAZMANDEH_FINAL_YEAR_OF_PAYROOL"]
+        self.proposed_survivor_strategy = config["PROPOSED_SURVIVOR_STRATEGY"]
+        self.death_to_survivor_rate = config["DEATH_TO_SURVIVOR_RATE"]
+        self.survivor_final_year_of_payrool = config["SURVIVOR_FINAL_YEAR_OF_PAYROOL"]
         self.new_people_age = 30
 
     def load_csvs(self):
@@ -61,10 +61,10 @@ class SimulationClass:
         self.retired = pd.read_excel("./csv/bazneshaste_bimepardaz_just_all.xlsx")
         # Azkaroftadeh
         self.azkaroftadeh = pd.read_excel("./csv/azkaroftadeh.xlsx")
-        # Bazmandeh
-        self.bazmandeh = pd.read_excel("./csv/bazmandeh.xlsx")
+        # SURVIVOR
+        self.survivor = pd.read_excel("./csv/bazmandeh.xlsx")
         # Bimeh pardazha
-        self.bimehPardaz = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
+        self.insured = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
         # Projection for population
         self.population_projection = pd.read_excel("./csv/population_projection.xlsx")
         self.population_projection["population"] = self.population_projection[
@@ -78,8 +78,8 @@ class SimulationClass:
             self.reporter.generate_report(
                 self.retired,
                 self.azkaroftadeh,
-                self.bazmandeh,
-                self.bimehPardaz,
+                self.survivor,
+                self.insured,
                 self.year,
                 self.insurance_fee_from_salary,
                 self.deads_number,
@@ -92,11 +92,11 @@ class SimulationClass:
             self.azkaroftadeh = add_inflation_to_salaries(
                 self.azkaroftadeh, self.inflation_rate
             )
-            self.bazmandeh = add_inflation_to_salaries(
-                self.bazmandeh, self.inflation_rate
+            self.survivor = add_inflation_to_salaries(
+                self.survivor, self.inflation_rate
             )
-            self.bimehPardaz = add_inflation_to_salaries(
-                self.bimehPardaz, self.inflation_rate
+            self.insured = add_inflation_to_salaries(
+                self.insured, self.inflation_rate
             )
 
             # Kills
@@ -105,26 +105,26 @@ class SimulationClass:
 
             self.population = add_death_rate(self.population, self.DEATH_RATES)
             self.population, self.deads_number = calculate_deaths(self.population)
-            # new bazmandeh
-            self.bazmandeh = add_to_bazmandeh(
-                self.bazmandeh, self.deads_number, self.death_to_bazmandeh_rate
+            # new survivor
+            self.survivor = add_to_survivor(
+                self.survivor, self.deads_number, self.death_to_survivor_rate
             )
 
-            # Proposed bazmandeh strategy
-            if self.proposed_bazmandeh_strategy:
-                self.bazmandeh = remove_bazmandeh_from_payrool(
-                    self.bazmandeh, self.bazmandeh_final_year_of_payrool
+            # Proposed survivor strategy
+            if self.proposed_survivor_strategy:
+                self.survivor = remove_survivor_from_payrool(
+                    self.survivor, self.survivor_final_year_of_payrool
                 )
 
             # Bazneshastegi
             self.retired = calculate_retirments(
-                self.bimehPardaz, self.retired, self.retirement_age
+                self.insured, self.retired, self.retirement_age
             )
 
             # New bimeh pardaz
-            self.bimehPardaz, self.population = calculate_new_people(
+            self.insured, self.population = calculate_new_people(
                 self.population_projection,
-                self.bimehPardaz,
+                self.insured,
                 self.population,
                 self.added_people_rate,
                 self.year,
@@ -138,11 +138,11 @@ class SimulationClass:
             self.retired = add_to_record_age(self.retired)
             self.azkaroftadeh = add_to_ages(self.azkaroftadeh)
             self.azkaroftadeh = add_to_record_age(self.azkaroftadeh)
-            self.bazmandeh = add_to_ages(self.bazmandeh)
-            self.bazmandeh = add_to_record_age(self.bazmandeh)
+            self.survivor = add_to_ages(self.survivor)
+            self.survivor = add_to_record_age(self.survivor)
 
-            self.bimehPardaz = add_to_ages(self.bimehPardaz)
-            self.bimehPardaz = add_to_record_age(self.bimehPardaz)
+            self.insured = add_to_ages(self.insured)
+            self.insured = add_to_record_age(self.insured)
 
             self.population = add_to_ages(self.population)
 

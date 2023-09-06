@@ -16,9 +16,9 @@ class CLIReporter:
         Alive Population:    {format_three_digit(report_as_json["azkaroftadeh_alive_population"])}"""
         )
         print(
-            f"""Bazmandeh Report:
-        Payment Obligation : {report_as_json["bazmandeh_payment_obligation"]} Hemat
-        Alive Population:    {format_three_digit(report_as_json["bazmandeh_alive_population"])}"""
+            f"""Survivor Report:
+        Payment Obligation : {report_as_json["survivor_payment_obligation"]} Hemat
+        Alive Population:    {format_three_digit(report_as_json["survivor_alive_population"])}"""
         )
         print(
             f"""Sum Report:
@@ -30,9 +30,9 @@ class CLIReporter:
 
         print(
             f"""Bimeh pardaz Report:
-        People Income  : {report_as_json["bimehpardaz_income"]} Hemat
-        Sandogh Income : {report_as_json["bimehpardaz_sandogh_income"]} Hemat
-        Alive Population:    {format_three_digit(report_as_json["bimehpardaz_alive_population"])} """
+        People Income  : {report_as_json["insured_income"]} Hemat
+        Sandogh Income : {report_as_json["insured_sandogh_income"]} Hemat
+        Alive Population:    {format_three_digit(report_as_json["insured_alive_population"])} """
         )
         self.print_seprated_red_line()
 

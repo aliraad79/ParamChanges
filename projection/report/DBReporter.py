@@ -24,7 +24,7 @@ class DBReporter:
             {
                 "year": [report_as_json["year"]],
                 "sandogh_income": [report_as_json["sandogh_income"]],
-                "alive": [report_as_json["bimehPardaz_population"]],
+                "alive": [report_as_json["insured_population"]],
             }
         )
         sandogh_inbalance_df = pd.DataFrame({"inbalance": [report_as_json["sandogh_inbalance"]]})
@@ -36,7 +36,7 @@ class DBReporter:
             dtype={"payment_obligation": DECIMAL()},
         )
         bimeh_pardaz_row.to_sql(
-            "bimehpardaz",
+            "insured",
             self.engine,
             if_exists="append",
             dtype={"sandogh_income": DECIMAL()},

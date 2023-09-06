@@ -20,7 +20,7 @@ class CSVReporter:
         bimeh_pardaz_row = {
             "year": report_as_json["year"],
             "sandogh_income": report_as_json["sandogh_income"],
-            "alive": report_as_json["bimehPardaz_population"],
+            "alive": report_as_json["insured_population"],
         }
         sandogh_inbalance_row = {
             "sandogh_inbalance":report_as_json["sandogh_inbalance"]
@@ -28,7 +28,7 @@ class CSVReporter:
         with open(self.csv_path + "_baznesh.csv", "a", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=bazneshaste_row.keys())
             writer.writerow(bazneshaste_row)
-        with open(self.csv_path + "_bimehpardaz.csv", "a", newline="") as f:
+        with open(self.csv_path + "_insured.csv", "a", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=bimeh_pardaz_row.keys())
             writer.writerow(bimeh_pardaz_row)
         with open(self.csv_path + "_inbalance.csv", "a", newline="") as f:

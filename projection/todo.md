@@ -17,6 +17,8 @@
 - [x] add death rate to added people new
 - [x] get death rate from statics -> for death of bazneshasteha
 
+
+- [] Add population of insured as 30-34 35- ... to json report
 - [] Add sandogh's sarmaye -> have a base capital that is decreased through years
 
 ## Pending

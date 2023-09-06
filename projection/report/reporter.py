@@ -23,8 +23,8 @@ class Reporter:
         self,
         retired,
         azkaroftadeh,
-        bazmandeh,
-        bimehPardaz,
+        survivor,
+        insured,
         year,
         INSURANCE_FEE_FROM_SALARY,
         deads_number,
@@ -34,33 +34,33 @@ class Reporter:
         # Salary infos
         retired_obligation = get_df_salary_sum(retired)
         azkaroftadeh_obligation = get_df_salary_sum(azkaroftadeh)
-        bazmandeh_obligation = get_df_salary_sum(bazmandeh)
-        people_income = get_df_salary_sum(bimehPardaz)
+        survivor_obligation = get_df_salary_sum(survivor)
+        people_income = get_df_salary_sum(insured)
         sandogh_income = convert_income_to_sandogh_income(
             people_income, INSURANCE_FEE_FROM_SALARY
         )
 
         sandogh_inbalance = sandogh_income - (
-            retired_obligation + azkaroftadeh_obligation + bazmandeh_obligation
+            retired_obligation + azkaroftadeh_obligation + survivor_obligation
         )
 
         # Populations
-        bimehPardaz_population = bimehPardaz["number"].sum()
+        insured_population = insured["number"].sum()
         retired_population = retired["number"].sum()
         azkaroftadeh_population = azkaroftadeh["number"].sum()
-        bazmandeh_population = bazmandeh["number"].sum()
+        survivor_population = survivor["number"].sum()
         population = population_df['number'].sum()
 
         report_as_json = self.jsonReporter.add_report(
             retired_obligation,
             azkaroftadeh_obligation,
-            bazmandeh_obligation,
+            survivor_obligation,
             retired_population,
             azkaroftadeh_population,
-            bazmandeh_population,
+            survivor_population,
             people_income,
             sandogh_income,
-            bimehPardaz_population,
+            insured_population,
             sandogh_inbalance,
             year,
             deads_number,
@@ -71,13 +71,13 @@ class Reporter:
         self.humanJsonReporter.add_report(
             retired_obligation,
             azkaroftadeh_obligation,
-            bazmandeh_obligation,
+            survivor_obligation,
             retired_population,
             azkaroftadeh_population,
-            bazmandeh_population,
+            survivor_population,
             people_income,
             sandogh_income,
-            bimehPardaz_population,
+            insured_population,
             sandogh_inbalance,
             year,
             deads_number,
