@@ -25,6 +25,7 @@ class Reporter:
         bimehPardaz,
         year,
         INSURANCE_FEE_FROM_SALARY,
+        deads_number
     ):
         # Salary infos
         retired_obligation = get_df_salary_sum(retired)
@@ -57,6 +58,7 @@ class Reporter:
             bimehPardaz_population,
             sandogh_inbalance,
             year,
+            deads_number
         )
 
         if self.cli:

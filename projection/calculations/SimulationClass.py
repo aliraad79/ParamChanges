@@ -23,6 +23,7 @@ class SimulationClass:
         self.load_config(config)
 
         self.reporter = Reporter(cli=cli, csv=csv, db=db)
+        self.deads_number = 0
         self.year = 1400
 
     def load_config(self, config):
@@ -60,6 +61,7 @@ class SimulationClass:
                 self.bimehPardaz,
                 self.year,
                 self.insurance_fee_from_salary,
+                self.deads_number
             )
             # Inflation
             self.retired = add_inflation_to_salaries(self.retired, self.inflation_rate)
@@ -75,10 +77,10 @@ class SimulationClass:
 
             # Kills
             self.retired = add_death_rate(self.retired, self.DEATH_RATES)
-            self.retired, deads_number = calculate_deaths(self.retired)
+            self.retired, self.deads_number = calculate_deaths(self.retired)
             # new bazmandeh
             self.bazmandeh = add_to_bazmandeh(
-                self.bazmandeh, deads_number, self.death_to_bazmandeh_rate
+                self.bazmandeh, self.deads_number, self.death_to_bazmandeh_rate
             )
 
             # Proposed bazmandeh strategy
