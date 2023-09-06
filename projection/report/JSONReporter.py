@@ -5,6 +5,7 @@ import pandas as pd
 class JSONReporter:
     def __init__(self) -> None:
         self.memory = []
+        self.population_memory = {}
 
     def add_report(
         self,
@@ -24,9 +25,6 @@ class JSONReporter:
         population,
         group_by_report: pd.Series,
     ):
-        age_json = {}
-        for index, serie in group_by_report.items():
-            age_json["bimeh_" + index] = serie
         report = {
             "year": year,
             "survivor_payment_obligation": rial_to_hemat(survivor_obligation),
@@ -48,8 +46,8 @@ class JSONReporter:
             "insured_alive_population": int(insured_population),
             "inbalance": rial_to_hemat(sandogh_inbalance),
             "all_population": int(population),
-            **age_json,
         }
         self.memory.append(report)
+        self.population_memory[year] = group_by_report.items()
 
         return report

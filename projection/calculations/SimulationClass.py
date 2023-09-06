@@ -94,9 +94,7 @@ class SimulationClass:
             self.survivor = add_inflation_to_salaries(
                 self.survivor, self.inflation_rate
             )
-            self.insured = add_inflation_to_salaries(
-                self.insured, self.inflation_rate
-            )
+            self.insured = add_inflation_to_salaries(self.insured, self.inflation_rate)
 
             # Kills
             self.retired = add_death_rate(self.retired, self.DEATH_RATES)
@@ -156,3 +154,7 @@ class SimulationClass:
 
     def human_json_report(self):
         return self.reporter.humanJsonReporter.memory
+
+    def population_json(self):
+        print(self.reporter.jsonReporter.population_memory)
+        return self.reporter.jsonReporter.population_memory

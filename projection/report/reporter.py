@@ -97,8 +97,7 @@ class Reporter:
             year,
             deads_number,
             new_added_population,
-            population,
-            group_by_report
+            population
         )
 
         if self.cli:
