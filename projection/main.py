@@ -31,6 +31,36 @@ def read_item(
         "DEATH_TO_BAZMANDEH_RATE": death_to_bazmandeh_rate,
         "BAZMANDEH_FINAL_YEAR_OF_PAYROOL": bazmandeh_final_yaer_of_payrool,
     }
-    mainClass = SimulationClass(config, cli=True, csv=True)
+    mainClass = SimulationClass(config)
     mainClass.run()
     return mainClass.json_report()
+
+
+@app.get("/human")
+def read_item(
+    inflation_rate: float = default_config["INFLATION_RATE"],
+    insurance_fee_from_salary: float = default_config["INSURANCE_FEE_FROM_SALARY"],
+    simulation_years: int = default_config["SIMULATION_YEARS"],
+    added_people_rate: float = default_config["ADDED_PEAOPLE_RATE"],
+    retirment_age: int = default_config["RETIREMENTMENT_AGE"],
+    basic_retirment_strategy: bool = default_config["BASIC_RETIRMENT_STRATEGY"],
+    proposed_bazmandeh_strategy: bool = default_config["PROPOSED_BAZMANDEH_STRATEGY"],
+    death_to_bazmandeh_rate: bool = default_config["DEATH_TO_BAZMANDEH_RATE"],
+    bazmandeh_final_yaer_of_payrool: int = default_config[
+        "BAZMANDEH_FINAL_YEAR_OF_PAYROOL"
+    ],
+):
+    config = {
+        "INFLATION_RATE": inflation_rate,
+        "INSURANCE_FEE_FROM_SALARY": insurance_fee_from_salary,
+        "SIMULATION_YEARS": simulation_years,
+        "ADDED_PEAOPLE_RATE": added_people_rate,
+        "RETIREMENTMENT_AGE": retirment_age,
+        "BASIC_RETIRMENT_STRATEGY": basic_retirment_strategy,
+        "PROPOSED_BAZMANDEH_STRATEGY": proposed_bazmandeh_strategy,
+        "DEATH_TO_BAZMANDEH_RATE": death_to_bazmandeh_rate,
+        "BAZMANDEH_FINAL_YEAR_OF_PAYROOL": bazmandeh_final_yaer_of_payrool,
+    }
+    mainClass = SimulationClass(config, cli=True)
+    mainClass.run()
+    return mainClass.human_json_report()

@@ -4,9 +4,9 @@ from .basic_utils import *
 from .config import default_config
 from report.reporter import Reporter
 
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 1000)
+pd.set_option("display.max_rows", 500)
+pd.set_option("display.max_columns", 500)
+pd.set_option("display.width", 1000)
 
 # =======================================
 # Assumtions:
@@ -20,7 +20,20 @@ pd.set_option('display.width', 1000)
 
 class SimulationClass:
     #             30-34  35-39   40-44  45-49  50-54  54-59  60-64  64-69  70-74  75-79  80-100 100-*
-    DEATH_RATES = [0.001, 0.001, 0.002, 0.003, 0.006, 0.011, 0.018, 0.029, 0.048, 0.079, 0.15, 0.5]
+    DEATH_RATES = [
+        0.001,
+        0.001,
+        0.002,
+        0.003,
+        0.006,
+        0.011,
+        0.018,
+        0.029,
+        0.048,
+        0.079,
+        0.15,
+        0.5,
+    ]
 
     def __init__(self, config=default_config, cli=False, csv=False, db=False) -> None:
         self.load_csvs()
@@ -67,7 +80,7 @@ class SimulationClass:
                 self.year,
                 self.insurance_fee_from_salary,
                 self.deads_number,
-                self.new_added_population
+                self.new_added_population,
             )
             print(self.retired)
             # Inflation
@@ -107,7 +120,7 @@ class SimulationClass:
                 self.bimehPardaz,
                 self.added_people_rate,
                 self.year,
-                int(self.deads_number)
+                int(self.deads_number),
             )
 
             # Aging
@@ -129,3 +142,6 @@ class SimulationClass:
 
     def json_report(self):
         return self.reporter.jsonReporter.memory
+
+    def human_json_report(self):
+        return self.reporter.humanJsonReporter.memory

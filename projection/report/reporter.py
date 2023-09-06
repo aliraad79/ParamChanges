@@ -2,6 +2,7 @@ from calculations.basic_utils import *
 from report.CSVReporter import CSVReporter
 from report.CLIReporter import CLIReporter
 from report.DBReporter import DBReporter
+from report.HumanJSONReporter import HumanJSONReporter
 from report.JSONReporter import JSONReporter
 
 
@@ -14,6 +15,7 @@ class Reporter:
         self.cliReporter = CLIReporter()
         # self.dbReporter = DBReporter()
         self.jsonReporter = JSONReporter()
+        self.humanJsonReporter = HumanJSONReporter()
 
         self.reports = []
 
@@ -60,7 +62,23 @@ class Reporter:
             sandogh_inbalance,
             year,
             deads_number,
-            new_added_population
+            new_added_population,
+        )
+
+        self.humanJsonReporter.add_report(
+            retired_obligation,
+            azkaroftadeh_obligation,
+            bazmandeh_obligation,
+            retired_population,
+            azkaroftadeh_population,
+            bazmandeh_population,
+            people_income,
+            sandogh_income,
+            bimehPardaz_population,
+            sandogh_inbalance,
+            year,
+            deads_number,
+            new_added_population,
         )
 
         if self.cli:
