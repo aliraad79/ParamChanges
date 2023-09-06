@@ -58,9 +58,6 @@ def calculate_new_people(
     else:
         population_diffrence = population_diffrence.item()
 
-    if population_diffrence < 0:
-        population_diffrence = 0
-
     new_population = ((population_diffrence) * rate * ONE_HUNDERD) + dead_people
     row = pd.DataFrame(
         {
