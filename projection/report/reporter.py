@@ -21,25 +21,26 @@ class Reporter:
 
     def generate_report(
         self,
-        retired,
-        azkaroftadeh,
-        survivor,
-        insured,
+        retired: pd.DataFrame,
+        azkaroftadeh: pd.DataFrame,
+        survivor: pd.DataFrame,
+        insured: pd.DataFrame,
         year,
         INSURANCE_FEE_FROM_SALARY,
         deads_number,
         new_added_population,
-        population_df
+        population_df: pd.DataFrame,
     ):
         # Salary infos
         retired_obligation = get_df_salary_sum(retired)
         azkaroftadeh_obligation = get_df_salary_sum(azkaroftadeh)
         survivor_obligation = get_df_salary_sum(survivor)
+
+        # Sandogh Info
         people_income = get_df_salary_sum(insured)
         sandogh_income = convert_income_to_sandogh_income(
             people_income, INSURANCE_FEE_FROM_SALARY
         )
-
         sandogh_inbalance = sandogh_income - (
             retired_obligation + azkaroftadeh_obligation + survivor_obligation
         )
@@ -49,7 +50,11 @@ class Reporter:
         retired_population = retired["number"].sum()
         azkaroftadeh_population = azkaroftadeh["number"].sum()
         survivor_population = survivor["number"].sum()
-        population = population_df['number'].sum()
+        population = population_df["number"].sum()
+
+        ## Population grouping
+        insured
+        insured.groupby(['age']).mean()
 
         report_as_json = self.jsonReporter.add_report(
             retired_obligation,
@@ -65,7 +70,7 @@ class Reporter:
             year,
             deads_number,
             new_added_population,
-            population
+            population,
         )
 
         self.humanJsonReporter.add_report(
@@ -82,7 +87,7 @@ class Reporter:
             year,
             deads_number,
             new_added_population,
-            population
+            population,
         )
 
         if self.cli:

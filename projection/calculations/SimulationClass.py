@@ -58,13 +58,13 @@ class SimulationClass:
 
     def load_csvs(self):
         # Bazneshasteha
-        self.retired = pd.read_excel("./csv/bazneshaste_bimepardaz_just_all.xlsx")
+        self.retired = pd.read_excel("./csv/retired.xlsx")
         # Azkaroftadeh
         self.azkaroftadeh = pd.read_excel("./csv/azkaroftadeh.xlsx")
         # SURVIVOR
         self.survivor = pd.read_excel("./csv/bazmandeh.xlsx")
         # Bimeh pardazha
-        self.insured = pd.read_excel("./csv/sabeghe_bimepardaz_just_all.xlsx")
+        self.insured = pd.read_excel("./csv/insured.xlsx")
         # Projection for population
         self.population_projection = pd.read_excel("./csv/population_projection.xlsx")
         self.population_projection["population"] = self.population_projection[
