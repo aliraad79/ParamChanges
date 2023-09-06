@@ -49,6 +49,7 @@ def calculate_new_people(
     rate,
     year,
     dead_people,
+    new_people_age
 ):
     population_diffrence = population_projection_in_milion.loc[
         population_projection_in_milion["year"] == year
@@ -62,7 +63,7 @@ def calculate_new_people(
     new_population = ((population_diffrence) * rate * ONE_HUNDERD) + dead_people
     row = pd.DataFrame(
         {
-            "age": [bimehPardaz.iloc[0]["age"]],
+            "age": [new_people_age],
             "average_salary": [bimehPardaz.iloc[0]["average_salary"]],
             "number": [new_population],
             "insurance_record": [0],

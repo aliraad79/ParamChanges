@@ -54,6 +54,7 @@ class SimulationClass:
         self.proposed_bazmandeh_strategy = config["PROPOSED_BAZMANDEH_STRATEGY"]
         self.death_to_bazmandeh_rate = config["DEATH_TO_BAZMANDEH_RATE"]
         self.bazmandeh_final_year_of_payrool = config["BAZMANDEH_FINAL_YEAR_OF_PAYROOL"]
+        self.new_people_age = 30
 
     def load_csvs(self):
         # Bazneshasteha
@@ -82,7 +83,7 @@ class SimulationClass:
                 self.deads_number,
                 self.new_added_population,
             )
-            print(self.retired)
+            print(self.bimehPardaz)
             # Inflation
             self.retired = add_inflation_to_salaries(self.retired, self.inflation_rate)
             self.azkaroftadeh = add_inflation_to_salaries(
@@ -121,6 +122,7 @@ class SimulationClass:
                 self.added_people_rate,
                 self.year,
                 int(self.deads_number),
+                self.new_people_age
             )
 
             # Aging
