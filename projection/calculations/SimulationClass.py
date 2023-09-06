@@ -103,8 +103,8 @@ class SimulationClass:
             # Aging
             self.retired = add_to_ages(self.retired)
             self.retired = add_to_record_age(self.retired)
-            self.azkaroftadeh = add_to_ages(self.retired)
-            self.azkaroftadeh = add_to_record_age(self.retired)
+            self.azkaroftadeh = add_to_ages(self.azkaroftadeh)
+            self.azkaroftadeh = add_to_record_age(self.azkaroftadeh)
             self.bazmandeh = add_to_ages(self.bazmandeh)
             self.bazmandeh = add_to_record_age(self.bazmandeh)
 
