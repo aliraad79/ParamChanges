@@ -17,11 +17,11 @@ class SimulationClass:
     #             40-50  50-60 60-70 70-80 80-90 90-100 100-*
     DEATH_RATES = [0.01, 0.01, 0.01, 0.02, 0.03, 0.5, 1]
 
-    def __init__(self, config=default_config) -> None:
+    def __init__(self, config=default_config, cli=False, csv=False, db=False) -> None:
         self.load_csvs()
         self.load_config(config)
 
-        self.reporter = Reporter(cli=True)
+        self.reporter = Reporter(cli=cli, csv=csv, db=db)
         self.year = 1400
 
     def load_config(self, config):

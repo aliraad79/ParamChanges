@@ -31,6 +31,6 @@ def read_item(
         "DEATH_TO_BAZMANDEH_RATE": death_to_bazmandeh_rate,
         "BAZMANDEH_FINAL_YEAR_OF_PAYROOL": bazmandeh_final_yaer_of_payrool,
     }
-    mainClass = SimulationClass(config)
+    mainClass = SimulationClass(config, cli=True, csv=True)
     mainClass.run()
     return mainClass.json_report()

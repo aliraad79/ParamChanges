@@ -6,13 +6,13 @@ from report.JSONReporter import JSONReporter
 
 
 class Reporter:
-    def __init__(self, cli=False, csv=False, db=False) -> None:
+    def __init__(self, cli, csv, db) -> None:
         self.cli = cli
         self.csv = csv
         self.db = db
-        self.csvReporter = CSVReporter()
+        # self.csvReporter = CSVReporter()
         self.cliReporter = CLIReporter()
-        self.dbReporter = DBReporter()
+        # self.dbReporter = DBReporter()
         self.jsonReporter = JSONReporter()
 
         self.reports = []
@@ -61,7 +61,7 @@ class Reporter:
 
         if self.cli:
             self.cliReporter.add_report(report_as_json)
-        if self.csv:
-            self.csvReporter.add_report(report_as_json)
-        if self.db:
-            self.dbReporter.add_report(report_as_json)
+        # if self.csv:
+        #     self.csvReporter.add_report(report_as_json)
+        # if self.db:
+        #     self.dbReporter.add_report(report_as_json)
