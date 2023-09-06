@@ -4,6 +4,10 @@ from .basic_utils import *
 from .config import default_config
 from report.reporter import Reporter
 
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+
 # =======================================
 # Assumtions:
 #       1. No new bimeh pardaz
@@ -65,6 +69,7 @@ class SimulationClass:
                 self.deads_number,
                 self.new_added_population
             )
+            print(self.retired)
             # Inflation
             self.retired = add_inflation_to_salaries(self.retired, self.inflation_rate)
             self.azkaroftadeh = add_inflation_to_salaries(
