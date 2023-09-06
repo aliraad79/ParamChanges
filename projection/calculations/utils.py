@@ -43,7 +43,11 @@ def calculate_retirments(
 
 
 def calculate_new_people(
-    population_projection_in_milion: pd.DataFrame, bimehPardaz: pd.DataFrame, rate, year
+    population_projection_in_milion: pd.DataFrame,
+    bimehPardaz: pd.DataFrame,
+    rate,
+    year,
+    dead_people,
 ):
     population_diffrence = population_projection_in_milion.loc[
         population_projection_in_milion["year"] == year
@@ -54,7 +58,10 @@ def calculate_new_people(
     else:
         population_diffrence = population_diffrence.item()
 
-    new_population = population_diffrence * rate * ONE_HUNDERD
+    if population_diffrence < 0:
+        population_diffrence = 0
+
+    new_population = ((population_diffrence) * rate * ONE_HUNDERD) + dead_people
     row = pd.DataFrame(
         {
             "age": [bimehPardaz.iloc[0]["age"]],

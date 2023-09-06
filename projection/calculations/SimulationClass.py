@@ -102,6 +102,7 @@ class SimulationClass:
                 self.bimehPardaz,
                 self.added_people_rate,
                 self.year,
+                int(self.deads_number)
             )
 
             # Aging
