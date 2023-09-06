@@ -76,7 +76,7 @@ def calculate_new_people(
         {
             "age": [new_people_age],
             "average_salary": [insured.iloc[0]["average_salary"]],
-            "number": [added_population],
+            "number": [int(added_population)],
             "insurance_record": [0],
         }
     )

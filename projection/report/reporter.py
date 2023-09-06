@@ -53,8 +53,17 @@ class Reporter:
         population = population_df["number"].sum()
 
         ## Population grouping
-        insured
-        insured.groupby(['age']).mean()
+        insured.loc[insured["age"].between(20, 24), "age_group"] = "20_24"
+        insured.loc[insured["age"].between(25, 29), "age_group"] = "25_29"
+        insured.loc[insured["age"].between(30, 34), "age_group"] = "30_34"
+        insured.loc[insured["age"].between(35, 39), "age_group"] = "35_39"
+        insured.loc[insured["age"].between(40, 44), "age_group"] = "40_44"
+        insured.loc[insured["age"].between(45, 49), "age_group"] = "45_49"
+        insured.loc[insured["age"].between(50, 54), "age_group"] = "50_54"
+        insured.loc[insured["age"].between(55, 59), "age_group"] = "55_59"
+        insured.loc[insured["age"].between(60, 64), "age_group"] = "60_64"
+        insured.loc[insured["age"].between(65, 69), "age_group"] = "65_69"
+        group_by_report = insured.groupby(["age_group"])["number"].sum()
 
         report_as_json = self.jsonReporter.add_report(
             retired_obligation,
@@ -71,6 +80,7 @@ class Reporter:
             deads_number,
             new_added_population,
             population,
+            group_by_report
         )
 
         self.humanJsonReporter.add_report(
@@ -88,6 +98,7 @@ class Reporter:
             deads_number,
             new_added_population,
             population,
+            group_by_report
         )
 
         if self.cli:

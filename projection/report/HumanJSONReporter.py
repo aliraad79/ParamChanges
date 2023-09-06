@@ -21,7 +21,11 @@ class HumanJSONReporter:
         deads_number,
         new_added_population,
         population,
+        group_by_report,
     ):
+        age_json = {}
+        for index, serie in group_by_report.items():
+            age_json["bimeh_" + index] = serie
         report = {
             "year": year,
             "survivor": {
@@ -50,6 +54,7 @@ class HumanJSONReporter:
                 "insured_income": rial_to_hemat(people_income),
                 "insured_sandogh_income": rial_to_hemat(sandogh_income),
                 "insured_alive_population": int(insured_population),
+                **age_json,
             },
             "sandogh": {
                 "inbalance": rial_to_hemat(sandogh_inbalance),

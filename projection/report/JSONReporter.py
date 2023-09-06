@@ -1,4 +1,5 @@
 from calculations.basic_utils import rial_to_hemat
+import pandas as pd
 
 
 class JSONReporter:
@@ -20,8 +21,12 @@ class JSONReporter:
         year,
         deads_number,
         new_added_population,
-        population
+        population,
+        group_by_report: pd.Series,
     ):
+        age_json = {}
+        for index, serie in group_by_report.items():
+            age_json["bimeh_" + index] = serie
         report = {
             "year": year,
             "survivor_payment_obligation": rial_to_hemat(survivor_obligation),
@@ -42,7 +47,8 @@ class JSONReporter:
             "insured_sandogh_income": rial_to_hemat(sandogh_income),
             "insured_alive_population": int(insured_population),
             "inbalance": rial_to_hemat(sandogh_inbalance),
-            "all_population" : int(population)
+            "all_population": int(population),
+            **age_json,
         }
         self.memory.append(report)
 

@@ -86,7 +86,6 @@ class SimulationClass:
                 self.new_added_population,
                 self.population,
             )
-            print(self.population)
             # Inflation
             self.retired = add_inflation_to_salaries(self.retired, self.inflation_rate)
             self.azkaroftadeh = add_inflation_to_salaries(

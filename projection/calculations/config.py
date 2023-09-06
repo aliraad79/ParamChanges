@@ -6,9 +6,7 @@ default_config = {
     # Retirment strategies
     "RETIREMENTMENT_AGE": 30,
     "BASIC_RETIRMENT_STRATEGY": True,
-    # Bazmandeg
-
-    # SURVIVOR = survivor
+    # SURVIVOR
     "PROPOSED_SURVIVOR_STRATEGY": False,
     "DEATH_TO_SURVIVOR_RATE": 0.2,
     "SURVIVOR_FINAL_YEAR_OF_PAYROOL": 10,
