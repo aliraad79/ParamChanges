@@ -21,7 +21,7 @@ class SimulationClass:
         self.load_csvs()
         self.load_config(config)
 
-        self.reporter = Reporter(json=True, cli=True)
+        self.reporter = Reporter(cli=True)
         self.year = 1400
 
     def load_config(self, config):

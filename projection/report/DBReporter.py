@@ -11,28 +11,23 @@ class DBReporter:
 
     def add_report(
         self,
-        bazneshasteh_payment_obligation,
-        bazneshasteh_population,
-        sandogh_income,
-        bimehPardaz_population,
-        sandogh_inbalance,
-        year,
+        report_as_json
     ):
         bazneshasteh_row = pd.DataFrame(
             {
-                "year": [year],
-                "payment_obligation": [bazneshasteh_payment_obligation],
-                "alive": [bazneshasteh_population],
+                "year": [report_as_json["year"]],
+                "payment_obligation": [report_as_json["bazneshasteh_payment_obligation"]],
+                "alive": [report_as_json["bazneshasteh_population"]],
             }
         )
         bimeh_pardaz_row = pd.DataFrame(
             {
-                "year": [year],
-                "sandogh_income": [sandogh_income],
-                "alive": [bimehPardaz_population],
+                "year": [report_as_json["year"]],
+                "sandogh_income": [report_as_json["sandogh_income"]],
+                "alive": [report_as_json["bimehPardaz_population"]],
             }
         )
-        sandogh_inbalance_df = pd.DataFrame({"inbalance": [sandogh_inbalance]})
+        sandogh_inbalance_df = pd.DataFrame({"inbalance": [report_as_json["sandogh_inbalance"]]})
 
         bazneshasteh_row.to_sql(
             "bazneshaste",
