@@ -15,8 +15,8 @@ from report.reporter import Reporter
 
 
 class SimulationClass:
-    #             30-34  35-39   40-44  45-49  50-54  54-59  60-64  64-69  70-74  75-79 80-*
-    DEATH_RATES = [0.001, 0.001, 0.002, 0.003, 0.006, 0.011, 0.018, 0.029, 0.048, 0.79, 0.15]
+    #             30-34  35-39   40-44  45-49  50-54  54-59  60-64  64-69  70-74  75-79  80-100 100-*
+    DEATH_RATES = [0.001, 0.001, 0.002, 0.003, 0.006, 0.011, 0.018, 0.029, 0.048, 0.079, 0.15, 0.5]
 
     def __init__(self, config=default_config, cli=False, csv=False, db=False) -> None:
         self.load_csvs()

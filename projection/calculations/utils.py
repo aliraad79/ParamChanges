@@ -17,7 +17,8 @@ def add_death_rate(df, death_percents):
         (69 > df["age"]) & (df["age"] >= 64),
         (74 > df["age"]) & (df["age"] >= 70),
         (79 > df["age"]) & (df["age"] >= 74),
-        (df["age"] >= 80),
+        (99 > df["age"]) & (df["age"] >= 80),
+        (df["age"] >= 100)
     ]
 
     df["death_percentage"] = np.select(conditions, death_percents)
