@@ -86,6 +86,7 @@ class SimulationClass:
                 self.new_added_population,
                 self.population,
             )
+            print(self.population)
             # Inflation
             self.retired = add_inflation_to_salaries(self.retired, self.inflation_rate)
             self.azkaroftadeh = add_inflation_to_salaries(
@@ -101,6 +102,9 @@ class SimulationClass:
             # Kills
             self.retired = add_death_rate(self.retired, self.DEATH_RATES)
             self.retired, self.deads_number = calculate_deaths(self.retired)
+
+            self.population = add_death_rate(self.population, self.DEATH_RATES)
+            self.population, self.deads_number = calculate_deaths(self.population)
             # new bazmandeh
             self.bazmandeh = add_to_bazmandeh(
                 self.bazmandeh, self.deads_number, self.death_to_bazmandeh_rate
