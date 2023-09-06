@@ -1,5 +1,5 @@
 from colorama import Fore, Style
-from calculations.utils import format_three_digit
+from calculations.basic_utils import format_three_digit
 
 
 class CLIReporter:
