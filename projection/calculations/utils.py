@@ -82,8 +82,9 @@ def calculate_new_people(
             "insurance_record": [0],
         }
     )
+    insured = pd.concat([row, insured], ignore_index=True)
 
-    return pd.concat([row, insured], ignore_index=True), population_df
+    return insured, population_df
 
 
 def add_to_survivor(survivor: pd.DataFrame, deads_number: int, rate):

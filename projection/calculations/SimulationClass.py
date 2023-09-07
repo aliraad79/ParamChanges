@@ -10,12 +10,10 @@ pd.set_option("display.width", 1000)
 
 # =======================================
 # Assumtions:
-#       1. No new bimeh pardaz
-#       2. Just retired people dies
+#       2. Just retired and insured people dies
 #       3. Inflation rate is static through years
 #       4. Bamandeha and Azkaroftadeha is constant
 #       5. People Die at age of 100
-#       6. new people start at avarge of 30
 # =======================================
 
 
@@ -101,7 +99,10 @@ class SimulationClass:
             self.retired, self.deads_number = calculate_deaths(self.retired)
 
             self.population = add_death_rate(self.population, self.DEATH_RATES)
-            self.population, self.deads_number = calculate_deaths(self.population)
+            self.population, _ = calculate_deaths(self.population)
+
+            self.insured = add_death_rate(self.insured, self.DEATH_RATES)
+            self.insured, _ = calculate_deaths(self.insured)
             # new survivor
             self.survivor = add_to_survivor(
                 self.survivor, self.deads_number, self.death_to_survivor_rate
