@@ -12,6 +12,12 @@ def rial_to_hemat(number):
 
     return round(number / ONE_HEMAT, 3)
 
+def rial_to_yearly_hemat(number):
+    number = int(number * 12) / 10
+
+    return round(number / ONE_HEMAT, 3)
+
+
 
 def convert_income_to_sandogh_income(number, RATE):
     return number * RATE

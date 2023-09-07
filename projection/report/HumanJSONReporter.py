@@ -1,4 +1,4 @@
-from calculations.basic_utils import rial_to_hemat
+from calculations.basic_utils import rial_to_yearly_hemat
 
 
 class HumanJSONReporter:
@@ -25,37 +25,38 @@ class HumanJSONReporter:
         report = {
             "year": year,
             "survivor": {
-                "survivor_payment_obligation": rial_to_hemat(survivor_obligation) * 12,
+                "survivor_payment_obligation": rial_to_yearly_hemat(
+                    survivor_obligation
+                ),
                 "survivor_alive_population": int(survivor_population),
             },
             "azkaroftadeh": {
-                "azkaroftadeh_payment_obligation": rial_to_hemat(
+                "azkaroftadeh_payment_obligation": rial_to_yearly_hemat(
                     azkaroftadeh_obligation
-                )
-                * 12,
+                ),
                 "azkaroftadeh_alive_population": int(azkaroftadeh_population),
             },
             "bazneshasteh": {
-                "bazneshasteh_payment_obligation": rial_to_hemat(retired_obligation)
-                * 12,
+                "bazneshasteh_payment_obligation": rial_to_yearly_hemat(
+                    retired_obligation
+                ),
                 "bazneshasteh_alive_population": int(retired_population),
             },
             "sum_mostamary_begir": {
-                "sum_payment_obligation": rial_to_hemat(
+                "sum_payment_obligation": rial_to_yearly_hemat(
                     survivor_obligation + retired_obligation + azkaroftadeh_obligation
-                )
-                * 12,
+                ),
                 "sum_alive_population": int(
                     retired_population + azkaroftadeh_population + survivor_population
                 ),
             },
             "bimeh_pardaz": {
-                "insured_income": rial_to_hemat(people_income) * 12,
-                "insured_sandogh_income": rial_to_hemat(sandogh_income) * 12,
+                "insured_income": rial_to_yearly_hemat(people_income),
+                "insured_sandogh_income": rial_to_yearly_hemat(sandogh_income),
                 "insured_alive_population": int(insured_population),
             },
             "sandogh": {
-                "inbalance": rial_to_hemat(sandogh_inbalance) * 12,
+                "inbalance": rial_to_yearly_hemat(sandogh_inbalance),
             },
             "deads_number": int(deads_number),
             "new_population": int(new_added_population),
