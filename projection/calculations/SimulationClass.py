@@ -12,7 +12,7 @@ pd.set_option("display.width", 1000)
 # Assumtions:
 #       2. Just retired and insured people dies
 #       3. Inflation rate is static through years
-#       4. Bamandeha and Azkaroftadeha is constant
+#       4. Azkaroftadeha is constant
 # =======================================
 
 
@@ -155,8 +155,9 @@ class SimulationClass:
             # NEXT year
             self.year += 1
 
-            if not self.basic_retirment_strategy:
-                self.retirement_age += 0.5
+            if not self.basic_retirment_strategy:            
+                if self.retirement_age < 40:
+                    self.retirement_age += 0.5
 
     def json_report(self):
         return self.reporter.jsonReporter.memory
