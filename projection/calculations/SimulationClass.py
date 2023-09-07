@@ -156,5 +156,4 @@ class SimulationClass:
         return self.reporter.humanJsonReporter.memory
 
     def population_json(self):
-        print(self.reporter.jsonReporter.population_memory)
         return self.reporter.jsonReporter.population_memory

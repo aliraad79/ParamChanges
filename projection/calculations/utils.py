@@ -62,12 +62,14 @@ def calculate_new_people(
         population_diffrence = population_diffrence.item()
 
     new_population = (population_diffrence * ONE_HUNDERD) + dead_people
-    new_borns = pd.DataFrame(
-        {
-            "age": [0],
-            "number": [new_population],
-        }
-    )
+
+    population_df.loc[0, "number"] += new_population
+
+    if population_df.loc[0, "age"] == 0:
+        population_df.loc[0, "number"] += new_population
+    else:
+        new_borns = pd.DataFrame({"age": [0], "number": [new_population]})
+        population_df = pd.concat([new_borns, population_df], ignore_index=True)
 
     added_population = (
         population_df.loc[population_df["age"] == new_people_age].get("number")
@@ -81,9 +83,7 @@ def calculate_new_people(
         }
     )
 
-    return pd.concat([row, insured], ignore_index=True), pd.concat(
-        [new_borns, population_df], ignore_index=True
-    )
+    return pd.concat([row, insured], ignore_index=True), population_df
 
 
 def add_to_survivor(survivor: pd.DataFrame, deads_number: int, rate):
