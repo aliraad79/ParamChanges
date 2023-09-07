@@ -13,24 +13,32 @@ pd.set_option("display.width", 1000)
 #       2. Just retired and insured people dies
 #       3. Inflation rate is static through years
 #       4. Bamandeha and Azkaroftadeha is constant
-#       5. People Die at age of 100
 # =======================================
 
 
 class SimulationClass:
     DEATH_RATES = [
-        0.001,  # 30-34
-        0.001,  # 35-39
-        0.002,  # 40-44
-        0.003,  # 45-49
-        0.006,  # 50-54
-        0.011,  # 54-59
-        0.018,  # 60-64
-        0.029,  # 64-69
-        0.048,  # 70-74
-        0.079,  # 75-79
-        0.15,  # 80-100
-        0.5,  # 100-*
+        0.0198,  # 0
+        0.0007,  # 1-4
+        0.0004,  # 5-9
+        0.0003,  # 10-14
+        0.0007,  # 15-19
+        0.0009,  # 20-24
+        0.0009,  # 25-29
+        0.0010,  # 30-34
+        0.0014,  # 35-39
+        0.0021,  # 40-44
+        0.0038,  # 45-49
+        0.0064,  # 50-54
+        0.0111,  # 54-59
+        0.0181,  # 60-64
+        0.0297,  # 64-69
+        0.0488,  # 70-74
+        0.0790,  # 75-79
+        0.1590,  # 80-100
+        0.3000,  # 100-120
+        0.5000,  # 120-140
+        1.0000,  # 140-*
     ]
 
     def __init__(self, config=default_config, cli=False, csv=False, db=False) -> None:
@@ -98,11 +106,11 @@ class SimulationClass:
             self.retired = add_death_rate(self.retired, self.DEATH_RATES)
             self.retired, self.deads_number = calculate_deaths(self.retired)
 
-            self.population = add_death_rate(self.population, self.DEATH_RATES)
-            self.population, _ = calculate_deaths(self.population)
-
             self.insured = add_death_rate(self.insured, self.DEATH_RATES)
             self.insured, _ = calculate_deaths(self.insured)
+
+            self.population = add_death_rate(self.population, self.DEATH_RATES)
+            self.population, _ = calculate_deaths(self.population)
             # new survivor
             self.survivor = add_to_survivor(
                 self.survivor, self.deads_number, self.death_to_survivor_rate

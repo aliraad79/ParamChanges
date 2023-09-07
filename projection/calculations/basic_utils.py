@@ -1,5 +1,7 @@
 import pandas as pd
+
 ONE_HEMAT = 1_000_000_000_000
+
 
 def get_df_salary_sum(df):
     return (df["average_salary"] * df["number"]).sum()
@@ -34,6 +36,7 @@ def add_inflation_to_salaries(df: pd.DataFrame, rate: int):
 def calculate_deaths(df: pd.DataFrame):
     deads_number = (df["number"] * df["death_percentage"]).sum()
     df["number"] = (df["number"] * (1 - df["death_percentage"])).astype(int)
+    df.drop(df[df["number"] == 0].index, inplace=True)
     return df, deads_number
 
 
