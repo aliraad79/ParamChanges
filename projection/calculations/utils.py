@@ -42,13 +42,28 @@ def calculate_retirments(
 
     merged = pd.merge(
         past_bazneshasteha,
-        current_bazneshasteha[["age", "number"]],
+        current_bazneshasteha[["age", "number", "insurance_record", "average_salary"]],
         on="age",
-        how="left",
+        how="outer",
     )
     merged["number"] = merged["number_x"].fillna(0) + merged["number_y"].fillna(0)
-    merged = merged.drop(columns=["number_x", "number_y"])
+    merged["insurance_record"] = merged["insurance_record_x"].fillna(0) + merged[
+        "insurance_record_y"
+    ].fillna(0)
+    merged["average_salary"] = merged["average_salary_x"].fillna(0) + merged[
+        "average_salary_y"
+    ].fillna(0)
 
+    merged = merged.drop(
+        columns=[
+            "number_x",
+            "number_y",
+            "average_salary_x",
+            "average_salary_y",
+            "insurance_record_x",
+            "insurance_record_y",
+        ]
+    ).sort_values("age")
     return merged
 
 
