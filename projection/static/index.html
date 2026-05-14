@@ -83,28 +83,25 @@
       <legend>راهبردها</legend>
 
       <div class="control">
-        <label class="toggle">
+        <label class="toggle" title="روشن: سن بازنشستگی ثابت است. خاموش: هر سال نیم سال به سابقه‌ی موردنیاز اضافه می‌شود (حداکثر ۴۰).">
           <input type="checkbox" id="basic_retirement_strategy">
           <span class="toggle-text">راهبرد پایه‌ی بازنشستگی</span>
         </label>
-        <p class="hint">روشن: سن بازنشستگی ثابت است. خاموش: هر سال نیم سال به سابقه‌ی موردنیاز اضافه می‌شود (حداکثر ۴۰).</p>
       </div>
 
       <div class="control">
-        <label class="toggle">
+        <label class="toggle" title="روشن: بازماندگان پس از تعداد سال مشخصی از حقوق محروم می‌شوند.">
           <input type="checkbox" id="proposed_survivor_strategy">
           <span class="toggle-text">راهبرد پیشنهادی بازماندگان</span>
         </label>
-        <p class="hint">روشن: بازماندگان پس از تعداد سال مشخصی از حقوق محروم می‌شوند.</p>
       </div>
 
       <div class="control">
-        <label for="survivor_final_year_of_payroll">سال نهایی پرداخت بازمانده</label>
+        <label for="survivor_final_year_of_payroll" title="فقط وقتی راهبرد پیشنهادی بازماندگان روشن باشد اعمال می‌شود.">سال نهایی پرداخت بازمانده</label>
         <div class="control-row">
           <input type="range" id="survivor_final_year_of_payroll_slider" min="0" max="40" step="1">
           <input type="number" id="survivor_final_year_of_payroll" min="0" max="40" step="1" class="num-input">
         </div>
-        <p class="hint">فقط وقتی راهبرد پیشنهادی بازماندگان روشن باشد اعمال می‌شود.</p>
       </div>
     </fieldset>
   </section>
