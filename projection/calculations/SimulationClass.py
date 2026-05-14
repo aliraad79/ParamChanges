@@ -1,8 +1,12 @@
+from pathlib import Path
+
 import pandas as pd
 from .utils import *
 from .basic_utils import *
 from .config import default_config
 from report.reporter import Reporter
+
+CSV_DIR = Path(__file__).resolve().parent.parent / "csv"
 
 pd.set_option("display.max_rows", 500)
 pd.set_option("display.max_columns", 500)
@@ -17,35 +21,11 @@ pd.set_option("display.width", 1000)
 
 
 class SimulationClass:
-    DEATH_RATES = [
-        0.0198,  # 0
-        0.0007,  # 1-4
-        0.0004,  # 5-9
-        0.0003,  # 10-14
-        0.0007,  # 15-19
-        0.0009,  # 20-24
-        0.0009,  # 25-29
-        0.0010,  # 30-34
-        0.0014,  # 35-39
-        0.0021,  # 40-44
-        0.0038,  # 45-49
-        0.0064,  # 50-54
-        0.0111,  # 54-59
-        0.0181,  # 60-64
-        0.0297,  # 64-69
-        0.0488,  # 70-74
-        0.0790,  # 75-79
-        0.1590,  # 80-100
-        0.3000,  # 100-120
-        0.5000,  # 120-140
-        1.0000,  # 140-*
-    ]
-
-    def __init__(self, config=default_config, cli=False, csv=False, db=False) -> None:
+    def __init__(self, config=default_config, cli=False) -> None:
         self.load_csvs()
         self.load_config(config)
 
-        self.reporter = Reporter(cli=cli, csv=csv, db=db)
+        self.reporter = Reporter(cli=cli)
         self.deads_number = 0
         self.new_added_population = 0
         self.year = 1400
@@ -55,29 +35,29 @@ class SimulationClass:
         self.insurance_fee_from_salary = config["INSURANCE_FEE_FROM_SALARY"]
         self.simulation_years = config["SIMULATION_YEARS"]
         self.added_people_rate = config["EMPLOYED_AND_INSURED_RATE"]
-        self.retirement_age = config["RETIREMENTMENT_AGE"]
-        self.basic_retirment_strategy = config["BASIC_RETIRMENT_STRATEGY"]
+        self.retirement_age = config["RETIREMENT_AGE"]
+        self.basic_retirement_strategy = config["BASIC_RETIREMENT_STRATEGY"]
         self.proposed_survivor_strategy = config["PROPOSED_SURVIVOR_STRATEGY"]
         self.death_to_survivor_rate = config["DEATH_TO_SURVIVOR_RATE"]
-        self.survivor_final_year_of_payrool = config["SURVIVOR_FINAL_YEAR_OF_PAYROOL"]
+        self.survivor_final_year_of_payroll = config["SURVIVOR_FINAL_YEAR_OF_PAYROLL"]
         self.new_people_age = 30
 
     def load_csvs(self):
         # Bazneshasteha
-        self.retired = pd.read_excel("./csv/retired.xlsx")
+        self.retired = pd.read_excel(CSV_DIR / "retired.xlsx")
         # Azkaroftadeh
-        self.azkaroftadeh = pd.read_excel("./csv/azkaroftadeh.xlsx")
+        self.azkaroftadeh = pd.read_excel(CSV_DIR / "azkaroftadeh.xlsx")
         # SURVIVOR
-        self.survivor = pd.read_excel("./csv/bazmandeh.xlsx")
+        self.survivor = pd.read_excel(CSV_DIR / "bazmandeh.xlsx")
         # Bimeh pardazha
-        self.insured = pd.read_excel("./csv/insured.xlsx")
+        self.insured = pd.read_excel(CSV_DIR / "insured.xlsx")
         # Projection for population
-        self.population_projection = pd.read_excel("./csv/population_projection.xlsx")
+        self.population_projection = pd.read_excel(CSV_DIR / "population_projection.xlsx")
         self.population_projection["population"] = self.population_projection[
             "population"
         ].diff()
         # Current population
-        self.population = pd.read_excel("./csv/population.xlsx")
+        self.population = pd.read_excel(CSV_DIR / "population.xlsx")
 
     def run(self):
         for i in range(self.simulation_years):
@@ -103,13 +83,13 @@ class SimulationClass:
             self.insured = add_inflation_to_salaries(self.insured, self.inflation_rate)
 
             # Kills
-            self.retired = add_death_rate(self.retired, self.DEATH_RATES)
+            self.retired = add_death_rate(self.retired)
             self.retired, self.deads_number = calculate_deaths(self.retired)
 
-            self.insured = add_death_rate(self.insured, self.DEATH_RATES)
+            self.insured = add_death_rate(self.insured)
             self.insured, _ = calculate_deaths(self.insured)
 
-            self.population = add_death_rate(self.population, self.DEATH_RATES)
+            self.population = add_death_rate(self.population)
             self.population, _ = calculate_deaths(self.population)
             # new survivor
             self.survivor = add_to_survivor(
@@ -118,12 +98,12 @@ class SimulationClass:
 
             # Proposed survivor strategy
             if self.proposed_survivor_strategy:
-                self.survivor = remove_survivor_from_payrool(
-                    self.survivor, self.survivor_final_year_of_payrool
+                self.survivor = remove_survivor_from_payroll(
+                    self.survivor, self.survivor_final_year_of_payroll
                 )
 
             # Bazneshastegi
-            self.retired = calculate_retirments(
+            self.insured, self.retired = calculate_retirments(
                 self.insured, self.retired, self.retirement_age
             )
 
@@ -155,7 +135,7 @@ class SimulationClass:
             # NEXT year
             self.year += 1
 
-            if not self.basic_retirment_strategy:            
+            if not self.basic_retirement_strategy:
                 if self.retirement_age < 40:
                     self.retirement_age += 0.5
 

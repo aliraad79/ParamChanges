@@ -1,4 +1,10 @@
-FROM python:3.9
+FROM python:3.12-slim
+
+# Iranian PyPI mirror — pypi.org is unreachable from inside containers in Iran.
+# Override with --build-arg PIP_INDEX_URL=... if you have a working proxy.
+ARG PIP_INDEX_URL=https://mirror-pypi.runflare.com/simple/
+ENV PIP_INDEX_URL=${PIP_INDEX_URL} \
+    PIP_TRUSTED_HOST=mirror-pypi.runflare.com
 
 WORKDIR /code
 

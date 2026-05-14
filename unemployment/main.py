@@ -3,12 +3,12 @@ from helper import rial_to_hemat
 import pandas as pd
 
 
-def calc_monthly_unimployment_wage():
+def calc_monthly_unemployment_wage():
     return round(MIN_MONTHLY_INCOME_1396_RIAL * 0.55, 3)
 
 
-def direct_unimployment():
-    unimp = pd.Series(
+def direct_unemployment():
+    unemp = pd.Series(
         {
             "1396": rial_to_hemat(40_329_138 * 1000_000),
             "1395": rial_to_hemat(33_244_992 * 1000_000),
@@ -18,9 +18,9 @@ def direct_unimployment():
         },
     )  # All in Hemat
     print("Cost for unemployment Insurance (Hemat)=>")
-    print(unimp)
-    unimp.to_csv("./csv/unimployment_direct.csv")
+    print(unemp)
+    unemp.to_csv("./csv/unemployment_direct.csv")
     print("-" * 50)
 
 
-direct_unimployment()
+direct_unemployment()

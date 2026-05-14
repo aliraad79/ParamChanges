@@ -1,9 +1,9 @@
 import pandas as pd
 from consts import GOVERN_PERCENTAGE
 from enums import MaxWageUpgrade
-from helper import calc_gorn_percentage, print_govern_total, rial_to_hunder_toman
-from insurance_perimum_ceil import insurancePerimumCeil
-from plot import plot_insurance_perimum_diff
+from helper import calc_govern_share, print_govern_total, rial_to_hundred_toman
+from insurance_premium_ceil import insurancePremiumCeil
+from plot import plot_insurance_premium_diff
 
 print_govern_total(GOVERN_PERCENTAGE)
 
@@ -20,18 +20,18 @@ table_4 = pd.DataFrame(
     index=["total_number", "avg_wage"],
 )
 
-table_4.loc["original_govern_share (hunderd toman)"] = rial_to_hunder_toman(
-    calc_gorn_percentage(table_4.loc["avg_wage"], GOVERN_PERCENTAGE)
+table_4.loc["original_govern_share (hundred toman)"] = rial_to_hundred_toman(
+    calc_govern_share(table_4.loc["avg_wage"], GOVERN_PERCENTAGE)
 )
 
-plot_insurance_perimum_diff(table_4)
+plot_insurance_premium_diff(table_4)
 
-insurancePerimumCeil(
+insurancePremiumCeil(
     MaxWageUpgrade.One_x, table_4, GOVERN_PERCENTAGE, save_as_csv=True
 ).main()
-insurancePerimumCeil(
+insurancePremiumCeil(
     MaxWageUpgrade.Two_x, table_4, GOVERN_PERCENTAGE, save_as_csv=True
 ).main()
-insurancePerimumCeil(
+insurancePremiumCeil(
     MaxWageUpgrade.Three_x, table_4, GOVERN_PERCENTAGE, save_as_csv=True
 ).main()

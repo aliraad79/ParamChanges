@@ -34,23 +34,27 @@ def format_three_digit(number):
     return result[::-1]
 
 
-def add_inflation_to_salaries(df: pd.DataFrame, rate: int):
+def add_inflation_to_salaries(df: pd.DataFrame, rate: float) -> pd.DataFrame:
+    df = df.copy()
     df["average_salary"] = df["average_salary"] * (1 + rate)
     return df
 
 
 def calculate_deaths(df: pd.DataFrame):
+    df = df.copy()
     deads_number = (df["number"] * df["death_percentage"]).sum()
     df["number"] = (df["number"] * (1 - df["death_percentage"])).astype(int)
-    df.drop(df[df["number"] == 0].index, inplace=True)
+    df = df[df["number"] != 0]
     return df, deads_number
 
 
-def add_to_ages(df):
+def add_to_ages(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
     df["age"] += 1
     return df
 
 
-def add_to_record_age(df):
+def add_to_record_age(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
     df["insurance_record"] += 1
     return df

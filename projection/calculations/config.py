@@ -3,11 +3,11 @@ default_config = {
     "INSURANCE_FEE_FROM_SALARY": 0.30,
     "SIMULATION_YEARS": 30,
     "EMPLOYED_AND_INSURED_RATE": 0.6 * 0.37,
-    # Retirment strategies
-    "RETIREMENTMENT_AGE": 30,
-    "BASIC_RETIRMENT_STRATEGY": True,
-    # SURVIVOR
+    # Retirement strategies
+    "RETIREMENT_AGE": 30,
+    "BASIC_RETIREMENT_STRATEGY": True,
+    # Survivor
     "PROPOSED_SURVIVOR_STRATEGY": False,
     "DEATH_TO_SURVIVOR_RATE": 0.2,
-    "SURVIVOR_FINAL_YEAR_OF_PAYROOL": 10,
+    "SURVIVOR_FINAL_YEAR_OF_PAYROLL": 10,
 }

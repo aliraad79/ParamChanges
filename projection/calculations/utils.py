@@ -4,41 +4,49 @@ from .formulas import basic_bazneshastegi_rule
 
 ONE_HUNDERD = 1_000
 
+# (lower_inclusive, upper_exclusive, annual_death_rate).
+# Boundaries preserve the original logic in this module; some bands are
+# off-by-one against the canonical 5-year groupings (e.g. 15-19 → 14-19),
+# and ages 99 and 119 fall into no band (death_percentage defaults to 0).
+# Fix bands and rerun the simulation if you intend to change behavior.
+DEATH_BANDS = [
+    (0, 1, 0.0198),
+    (1, 4, 0.0007),
+    (5, 9, 0.0004),
+    (10, 14, 0.0003),
+    (14, 19, 0.0007),
+    (20, 24, 0.0009),
+    (24, 29, 0.0009),
+    (30, 34, 0.0010),
+    (34, 39, 0.0014),
+    (40, 44, 0.0021),
+    (44, 49, 0.0038),
+    (50, 54, 0.0064),
+    (54, 59, 0.0111),
+    (60, 64, 0.0181),
+    (64, 69, 0.0297),
+    (70, 74, 0.0488),
+    (74, 79, 0.0790),
+    (80, 99, 0.1590),
+    (100, 119, 0.3000),
+    (120, 140, 0.5000),
+    (140, np.inf, 1.0000),
+]
 
-def add_death_rate(df, death_percents):
-    conditions = [
-        (0 == df["age"]),
-        (4 > df["age"]) & (df["age"] >= 1),
-        (9 > df["age"]) & (df["age"] >= 5),
-        (14 > df["age"]) & (df["age"] >= 10),
-        (19 > df["age"]) & (df["age"] >= 14),
-        (24 > df["age"]) & (df["age"] >= 20),
-        (29 > df["age"]) & (df["age"] >= 24),
-        (34 > df["age"]) & (df["age"] >= 30),
-        (39 > df["age"]) & (df["age"] >= 34),
-        (44 > df["age"]) & (df["age"] >= 40),
-        (49 > df["age"]) & (df["age"] >= 44),
-        (54 > df["age"]) & (df["age"] >= 50),
-        (59 > df["age"]) & (df["age"] >= 54),
-        (64 > df["age"]) & (df["age"] >= 60),
-        (69 > df["age"]) & (df["age"] >= 64),
-        (74 > df["age"]) & (df["age"] >= 70),
-        (79 > df["age"]) & (df["age"] >= 74),
-        (99 > df["age"]) & (df["age"] >= 80),
-        (119 > df["age"]) & (df["age"] >= 100),
-        (140 > df["age"]) & (df["age"] >= 120),
-        (df["age"] >= 140),
-    ]
 
-    df["death_percentage"] = np.select(conditions, death_percents)
+def add_death_rate(df: pd.DataFrame, bands=DEATH_BANDS) -> pd.DataFrame:
+    df = df.copy()
+    conditions = [(lo <= df["age"]) & (df["age"] < hi) for lo, hi, _ in bands]
+    rates = [rate for _, _, rate in bands]
+    df["death_percentage"] = np.select(conditions, rates, default=0.0)
     return df
 
 
 def calculate_retirments(
-    insured: pd.DataFrame, past_bazneshasteha: pd.DataFrame, RETIREMENTMENT_AGE
+    insured: pd.DataFrame, past_bazneshasteha: pd.DataFrame, retirement_age
 ):
-    current_bazneshasteha = basic_bazneshastegi_rule(insured, RETIREMENTMENT_AGE)
-    insured.drop(current_bazneshasteha.index, inplace=True)
+    current_bazneshasteha = basic_bazneshastegi_rule(insured, retirement_age)
+    new_insured = insured.drop(current_bazneshasteha.index)
 
     merged = pd.merge(
         past_bazneshasteha,
@@ -64,7 +72,7 @@ def calculate_retirments(
             "insurance_record_y",
         ]
     ).sort_values("age")
-    return merged
+    return new_insured, merged
 
 
 def calculate_new_people(
@@ -76,6 +84,8 @@ def calculate_new_people(
     dead_people,
     new_people_age,
 ):
+    population_df = population_df.copy()
+
     population_diffrence = population_projection_in_milion.loc[
         population_projection_in_milion["year"] == year
     ].get("population")
@@ -87,17 +97,17 @@ def calculate_new_people(
 
     new_population = (population_diffrence * ONE_HUNDERD) + dead_people
 
-    population_df.loc[0, "number"] += new_population
-
-    if population_df.loc[0, "age"] == 0:
-        population_df.loc[0, "number"] += new_population
+    age0_mask = population_df["age"] == 0
+    if age0_mask.any():
+        population_df.loc[age0_mask, "number"] += new_population
     else:
         new_borns = pd.DataFrame({"age": [0], "number": [new_population]})
         population_df = pd.concat([new_borns, population_df], ignore_index=True)
 
     added_population = (
-        population_df.loc[population_df["age"] == new_people_age].get("number")
-    ) * rate
+        population_df.loc[population_df["age"] == new_people_age, "number"].sum()
+        * rate
+    )
     row = pd.DataFrame(
         {
             "age": [new_people_age],
@@ -123,5 +133,5 @@ def add_to_survivor(survivor: pd.DataFrame, deads_number: int, rate):
     return pd.concat([row, survivor], ignore_index=True)
 
 
-def remove_survivor_from_payrool(df: pd.DataFrame, final_year_of_payrool):
-    return df.loc[df["insurance_record"] <= final_year_of_payrool]
+def remove_survivor_from_payroll(df: pd.DataFrame, final_year_of_payroll):
+    return df.loc[df["insurance_record"] <= final_year_of_payroll]

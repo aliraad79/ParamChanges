@@ -19,11 +19,11 @@ def rial_to_hemat(number):
     return round(number / ONE_HEMAT, 3)
 
 
-def rial_to_hunder_toman(number):
+def rial_to_hundred_toman(number):
     return round(number / 10000)
 
 
-def calc_gorn_percentage(wage, govern_percentage=0.03):
+def calc_govern_share(wage, govern_percentage=0.03):
     return wage * govern_percentage
 
 
@@ -31,13 +31,13 @@ def print_govern_total(govern_percentage):
     print(
         "Government 3% Insurance premium in 1400:",
         format_three_digit(
-            calc_gorn_percentage(average_income_1400, govern_percentage)
+            calc_govern_share(average_income_1400, govern_percentage)
             * number_of_bimey_shodegan_1400
         ),
         "Rial",
         "|",
         rial_to_hemat(
-            calc_gorn_percentage(average_income_1400, govern_percentage)
+            calc_govern_share(average_income_1400, govern_percentage)
             * number_of_bimey_shodegan_1400
         ),
         "Hemat",

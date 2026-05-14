@@ -1,19 +1,13 @@
 from calculations.basic_utils import *
-from report.CSVReporter import CSVReporter
 from report.CLIReporter import CLIReporter
-from report.DBReporter import DBReporter
 from report.HumanJSONReporter import HumanJSONReporter
 from report.JSONReporter import JSONReporter
 
 
 class Reporter:
-    def __init__(self, cli, csv, db) -> None:
+    def __init__(self, cli) -> None:
         self.cli = cli
-        self.csv = csv
-        self.db = db
-        # self.csvReporter = CSVReporter()
         self.cliReporter = CLIReporter()
-        # self.dbReporter = DBReporter()
         self.jsonReporter = JSONReporter()
         self.humanJsonReporter = HumanJSONReporter()
 
@@ -92,10 +86,6 @@ class Reporter:
 
         if self.cli:
             self.cliReporter.add_report(report_as_json)
-        # if self.csv:
-        #     self.csvReporter.add_report(report_as_json)
-        # if self.db:
-        #     self.dbReporter.add_report(report_as_json)
 
     def group_by_age(self, insured):
         insured.loc[insured["age"].between(20, 24), "age_group"] = "20_24"
