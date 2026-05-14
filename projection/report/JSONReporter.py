@@ -50,6 +50,11 @@ class JSONReporter:
             "all_population": int(population),
         }
         self.memory.append(report)
-        self.population_memory[year] = group_by_report.items()
+        # Materialize as a plain {age_group: count} dict — earlier versions
+        # stored .items() which is a single-use iterator and was emptied by
+        # the first JSON serialization (then returned {} on every read after).
+        self.population_memory[year] = {
+            str(k): int(v) for k, v in group_by_report.items()
+        }
 
         return report

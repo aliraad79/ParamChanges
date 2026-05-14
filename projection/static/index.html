@@ -124,42 +124,29 @@
     <div class="kpi"><div class="kpi-label">ناترازی پایانی</div><div class="kpi-value" id="kpi_end_inbalance">—</div></div>
   </section>
 
-  <section class="year-slicer">
-    <h2>محدوده‌ی سال</h2>
-    <div class="year-slicer-row">
-      <span id="year_min_label" class="year-tag"></span>
-      <div class="year-track">
-        <input type="range" id="year_min" step="1">
-        <input type="range" id="year_max" step="1">
-      </div>
-      <span id="year_max_label" class="year-tag"></span>
-    </div>
-  </section>
-
   <main class="charts">
     <div class="chart-card chart-area">
       <h2>توزیع جمعیتی کارمندان و بازنشسته‌ها</h2>
       <div class="canvas-wrap"><canvas id="chart_population"></canvas></div>
     </div>
 
-    <div class="chart-card">
-      <h2>جمعیت در بازه‌های سنی</h2>
-      <div class="canvas-wrap"><canvas id="chart_age_groups"></canvas></div>
-    </div>
-
-    <div class="chart-card">
-      <h2>میزان پرداختی در برابر دریافتی</h2>
-      <div class="canvas-wrap"><canvas id="chart_payment_vs_income"></canvas></div>
-    </div>
-
-    <div class="chart-card">
-      <h2>نسبت بیمه‌شده به بازنشسته</h2>
-      <div class="canvas-wrap"><canvas id="chart_ratio"></canvas></div>
-    </div>
-
-    <div class="chart-card">
-      <h2>ناترازی صندوق</h2>
-      <div class="canvas-wrap"><canvas id="chart_inbalance"></canvas></div>
+    <div class="charts-row">
+      <div class="chart-card">
+        <h2>جمعیت در بازه‌های سنی</h2>
+        <div class="canvas-wrap"><canvas id="chart_age_groups"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h2>میزان پرداختی در برابر دریافتی</h2>
+        <div class="canvas-wrap"><canvas id="chart_payment_vs_income"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h2>نسبت بیمه‌شده به بازنشسته</h2>
+        <div class="canvas-wrap"><canvas id="chart_ratio"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h2>ناترازی صندوق</h2>
+        <div class="canvas-wrap"><canvas id="chart_inbalance"></canvas></div>
+      </div>
     </div>
   </main>
 

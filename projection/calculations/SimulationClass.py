@@ -1,3 +1,4 @@
+from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
@@ -7,6 +8,19 @@ from .config import default_config
 from report.reporter import Reporter
 
 CSV_DIR = Path(__file__).resolve().parent.parent / "csv"
+
+
+@lru_cache(maxsize=1)
+def _load_inputs():
+    """Read all xlsx inputs once per process. Each caller gets fresh copies."""
+    return {
+        "retired": pd.read_excel(CSV_DIR / "retired.xlsx"),
+        "azkaroftadeh": pd.read_excel(CSV_DIR / "azkaroftadeh.xlsx"),
+        "survivor": pd.read_excel(CSV_DIR / "bazmandeh.xlsx"),
+        "insured": pd.read_excel(CSV_DIR / "insured.xlsx"),
+        "population_projection": pd.read_excel(CSV_DIR / "population_projection.xlsx"),
+        "population": pd.read_excel(CSV_DIR / "population.xlsx"),
+    }
 
 pd.set_option("display.max_rows", 500)
 pd.set_option("display.max_columns", 500)
@@ -43,21 +57,16 @@ class SimulationClass:
         self.new_people_age = 30
 
     def load_csvs(self):
-        # Bazneshasteha
-        self.retired = pd.read_excel(CSV_DIR / "retired.xlsx")
-        # Azkaroftadeh
-        self.azkaroftadeh = pd.read_excel(CSV_DIR / "azkaroftadeh.xlsx")
-        # SURVIVOR
-        self.survivor = pd.read_excel(CSV_DIR / "bazmandeh.xlsx")
-        # Bimeh pardazha
-        self.insured = pd.read_excel(CSV_DIR / "insured.xlsx")
-        # Projection for population
-        self.population_projection = pd.read_excel(CSV_DIR / "population_projection.xlsx")
+        inputs = _load_inputs()
+        self.retired = inputs["retired"].copy()
+        self.azkaroftadeh = inputs["azkaroftadeh"].copy()
+        self.survivor = inputs["survivor"].copy()
+        self.insured = inputs["insured"].copy()
+        self.population_projection = inputs["population_projection"].copy()
         self.population_projection["population"] = self.population_projection[
             "population"
         ].diff()
-        # Current population
-        self.population = pd.read_excel(CSV_DIR / "population.xlsx")
+        self.population = inputs["population"].copy()
 
     def run(self):
         for i in range(self.simulation_years):

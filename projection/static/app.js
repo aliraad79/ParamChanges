@@ -39,8 +39,6 @@ const charts = {};
 const state = {
   data: null,
   population: null,
-  yearMin: null,
-  yearMax: null,
   inflight: null,
 };
 
@@ -91,23 +89,20 @@ function applyDefaultsToForm() {
 }
 
 function readConfigFromForm() {
-  const params = new URLSearchParams();
+  const body = {};
   for (const id of PERCENT_FIELDS) {
     const el = document.getElementById(id);
-    if (el && el.value !== '') {
-      const float = Number(el.value) / 100;
-      params.set(id, String(float));
-    }
+    if (el && el.value !== '') body[id] = Number(el.value) / 100;
   }
   for (const id of NUMBER_FIELDS) {
     const el = document.getElementById(id);
-    if (el && el.value !== '') params.set(id, el.value);
+    if (el && el.value !== '') body[id] = Number(el.value);
   }
   for (const id of FLAG_FIELDS) {
     const el = document.getElementById(id);
-    if (el) params.set(id, el.checked ? 'true' : 'false');
+    if (el) body[id] = !!el.checked;
   }
-  return params;
+  return body;
 }
 
 // ---------------------------------------------------------------------------
@@ -115,13 +110,9 @@ function readConfigFromForm() {
 // ---------------------------------------------------------------------------
 
 async function loadDefaults() {
-  const res = await fetch('/openapi.json');
-  const schema = await res.json();
-  const params = schema.paths['/api'].get.parameters || [];
-  for (const p of params) {
-    const def = p.schema && (p.schema.default ?? null);
-    if (def !== null && def !== undefined) defaults[p.name] = def;
-  }
+  const res = await fetch('/api/defaults');
+  if (!res.ok) throw new Error(`/api/defaults ${res.status}`);
+  Object.assign(defaults, await res.json());
   applyDefaultsToForm();
 }
 
@@ -141,23 +132,19 @@ async function runSimulation() {
   setStatus('در حال شبیه‌سازی…', 'loading');
   document.getElementById('refresh').disabled = true;
   try {
-    const params = readConfigFromForm();
-    const [report, pop] = await Promise.all([
-      fetch(`/api?${params}`).then(r => {
-        if (!r.ok) throw new Error(`/api ${r.status}`);
-        return r.json();
-      }),
-      fetch(`/api/population?${params}`).then(r => {
-        if (!r.ok) throw new Error(`/api/population ${r.status}`);
-        return r.json();
-      }),
-    ]);
+    const config = readConfigFromForm();
+    const res = await fetch('/api/full', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(config),
+    });
+    if (!res.ok) throw new Error(`/api/full ${res.status}`);
+    const body = await res.json();
     if (token.aborted) return;
-    state.data = report;
-    state.population = pop;
-    initYearSlicer();
+    state.data = body.report;
+    state.population = body.population;
     renderAll();
-    setStatus(`${report.length} سال شبیه‌سازی شد`, '');
+    setStatus(`${state.data.length} سال شبیه‌سازی شد`, '');
   } catch (err) {
     if (token.aborted) return;
     console.error(err);
@@ -177,52 +164,12 @@ function onConfigInput() {
 }
 
 // ---------------------------------------------------------------------------
-// Year slicer
-// ---------------------------------------------------------------------------
-
-function initYearSlicer() {
-  if (!state.data || !state.data.length) return;
-  const years = state.data.map(d => d.year);
-  const minY = Math.min(...years);
-  const maxY = Math.max(...years);
-  state.yearMin = minY;
-  state.yearMax = maxY;
-  for (const id of ['year_min', 'year_max']) {
-    const el = document.getElementById(id);
-    el.min = minY;
-    el.max = maxY;
-    el.value = id === 'year_min' ? minY : maxY;
-  }
-  updateYearLabels();
-}
-
-function updateYearLabels() {
-  document.getElementById('year_min_label').textContent = state.yearMin;
-  document.getElementById('year_max_label').textContent = state.yearMax;
-}
-
-function onYearChange() {
-  const lo = parseInt(document.getElementById('year_min').value, 10);
-  const hi = parseInt(document.getElementById('year_max').value, 10);
-  state.yearMin = Math.min(lo, hi);
-  state.yearMax = Math.max(lo, hi);
-  document.getElementById('year_min').value = state.yearMin;
-  document.getElementById('year_max').value = state.yearMax;
-  updateYearLabels();
-  renderAll();
-}
-
-function filteredYears() {
-  return state.data.filter(d => d.year >= state.yearMin && d.year <= state.yearMax);
-}
-
-// ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
 
 function renderAll() {
   if (!state.data) return;
-  const rows = filteredYears();
+  const rows = state.data;
   renderKpis(rows);
   renderPopulation(rows);
   renderRatio(rows);
@@ -280,7 +227,8 @@ function renderPopulation(rows) {
       ],
     },
     options: rtlChartOptions({
-      scales: { y: { beginAtZero: true, ticks: { callback: formatNumberCompact } } },
+      scales: { y: { beginAtZero: true, ticks: { callback: formatNumberCompact, font: { size: 10 } } }, x: { ticks: { font: { size: 10 } } } },
+      plugins: { legend: { position: 'bottom', rtl: true, labels: { boxWidth: 12, padding: 6, font: { size: 11 } } } },
     }),
   });
 }
@@ -335,10 +283,10 @@ function renderPaymentVsIncome(rows) {
     type: 'pie',
     data: {
       labels: [
-        'تعهد پرداخت بازنشستگان',
-        'تعهد پرداخت ازکارافتادگان',
-        'تعهد پرداخت بازماندگان',
-        'دریافتی صندوق از بیمه',
+        'بازنشستگان',
+        'ازکارافتادگان',
+        'بازماندگان',
+        'دریافتی صندوق',
       ],
       datasets: [{
         data: [
@@ -350,16 +298,15 @@ function renderPaymentVsIncome(rows) {
         backgroundColor: [COLORS.retired, COLORS.azkaroftadeh, COLORS.survivor, COLORS.income],
       }],
     },
-    options: rtlChartOptions({}),
+    options: rtlChartOptions({
+      plugins: { legend: { position: 'right', rtl: true, labels: { boxWidth: 12, padding: 6 } } },
+    }),
   });
 }
 
 function renderAgeGroups() {
   if (!state.population) return;
-  const years = Object.keys(state.population)
-    .map(Number)
-    .filter(y => y >= state.yearMin && y <= state.yearMax)
-    .sort((a, b) => a - b);
+  const years = Object.keys(state.population).map(Number).sort((a, b) => a - b);
   if (!years.length) return;
   const targetYear = years[years.length - 1];
   const groups = state.population[targetYear] || [];
@@ -379,7 +326,10 @@ function renderAgeGroups() {
       }],
     },
     options: rtlChartOptions({
-      plugins: { title: { display: true, text: `سال ${targetYear}` } },
+      plugins: {
+        title: { display: true, text: `سال ${targetYear}`, font: { size: 11 } },
+        legend: { position: 'right', rtl: true, labels: { boxWidth: 12, padding: 4, font: { size: 11 } } },
+      },
     }),
   });
 }
@@ -457,10 +407,6 @@ function formatHemat(x) {
   for (const id of FLAG_FIELDS) {
     const el = document.getElementById(id);
     if (el) el.addEventListener('change', onConfigInput);
-  }
-  for (const id of ['year_min', 'year_max']) {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', onYearChange);
   }
 
   await loadDefaults();
