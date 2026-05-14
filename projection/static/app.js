@@ -171,9 +171,11 @@ function renderAll() {
   if (!state.data) return;
   const rows = state.data;
   renderKpis(rows);
+  renderInbalance(rows);
+  renderCumulativeInbalance(rows);
+  renderIncomeVsObligation(rows);
   renderPopulation(rows);
   renderRatio(rows);
-  renderInbalance(rows);
   renderPaymentVsIncome(rows);
   renderAgeGroups();
 }
@@ -271,8 +273,77 @@ function renderInbalance(rows) {
       }],
     },
     options: rtlChartOptions({
-      scales: { y: { ticks: { callback: formatNumberCompact } } },
+      scales: {
+        y: { ticks: { callback: formatNumberCompact, font: { size: 10 } } },
+        x: { ticks: { font: { size: 10 } } },
+      },
       plugins: { legend: { display: false } },
+    }),
+  });
+}
+
+function renderCumulativeInbalance(rows) {
+  const labels = rows.map(d => d.year);
+  let running = 0;
+  const cum = rows.map(d => (running += d.inbalance || 0));
+  upsertChart('chart_inbalance_cumulative', {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'ناترازی تجمعی (همت)',
+        data: cum,
+        fill: true,
+        backgroundColor: 'rgba(216, 80, 78, 0.18)',
+        borderColor: COLORS.retired,
+        tension: 0.2,
+        pointRadius: 0,
+      }],
+    },
+    options: rtlChartOptions({
+      scales: {
+        y: { ticks: { callback: formatNumberCompact, font: { size: 10 } } },
+        x: { ticks: { font: { size: 10 } } },
+      },
+      plugins: { legend: { display: false } },
+    }),
+  });
+}
+
+function renderIncomeVsObligation(rows) {
+  const labels = rows.map(d => d.year);
+  const income = rows.map(d => d.insured_sandogh_income || 0);
+  const obligation = rows.map(d => d.sum_payment_obligation || 0);
+  upsertChart('chart_income_vs_obligation', {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'تعهد پرداخت',
+          data: obligation,
+          fill: '+1',                                   // fill down to next dataset
+          backgroundColor: 'rgba(216, 80, 78, 0.18)',   // red shading where obligation > income
+          borderColor: COLORS.retired,
+          tension: 0.2,
+          pointRadius: 0,
+        },
+        {
+          label: 'دریافتی صندوق',
+          data: income,
+          fill: false,
+          borderColor: COLORS.income,
+          tension: 0.2,
+          pointRadius: 0,
+        },
+      ],
+    },
+    options: rtlChartOptions({
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: formatNumberCompact, font: { size: 10 } } },
+        x: { ticks: { font: { size: 10 } } },
+      },
+      plugins: { legend: { position: 'bottom', rtl: true, labels: { boxWidth: 12, padding: 6, font: { size: 11 } } } },
     }),
   });
 }

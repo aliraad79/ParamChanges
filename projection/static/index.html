@@ -23,23 +23,21 @@
       <legend>پارامترهای اقتصادی</legend>
 
       <div class="control" data-control="percent">
-        <label for="inflation_rate">نرخ تورم سالانه</label>
+        <label for="inflation_rate" title="درصدی که حقوق‌ها هر سال افزایش می‌یابد.">نرخ تورم سالانه</label>
         <div class="control-row">
           <input type="range" id="inflation_rate_slider" min="0" max="100" step="1">
           <input type="number" id="inflation_rate" min="0" max="100" step="0.1" class="num-input">
           <span class="unit">٪</span>
         </div>
-        <p class="hint">درصدی که حقوق‌ها هر سال افزایش می‌یابد.</p>
       </div>
 
       <div class="control" data-control="percent">
-        <label for="insurance_fee_from_salary">سهم حق بیمه از حقوق</label>
+        <label for="insurance_fee_from_salary" title="سهم کل حق بیمه‌ای که سالانه از حقوق کم می‌شود (سهم بیمه‌شده + کارفرما + دولت).">سهم حق بیمه از حقوق</label>
         <div class="control-row">
           <input type="range" id="insurance_fee_from_salary_slider" min="0" max="100" step="1">
           <input type="number" id="insurance_fee_from_salary" min="0" max="100" step="0.1" class="num-input">
           <span class="unit">٪</span>
         </div>
-        <p class="hint">سهم کل حق بیمه‌ای که سالانه از حقوق کم می‌شود (سهم بیمه‌شده + کارفرما + دولت).</p>
       </div>
     </fieldset>
 
@@ -47,41 +45,37 @@
       <legend>پارامترهای جمعیتی</legend>
 
       <div class="control">
-        <label for="simulation_years">طول شبیه‌سازی (سال)</label>
+        <label for="simulation_years" title="از سال ۱۴۰۰ به جلو.">طول شبیه‌سازی (سال)</label>
         <div class="control-row">
           <input type="range" id="simulation_years_slider" min="1" max="80" step="1">
           <input type="number" id="simulation_years" min="1" max="80" step="1" class="num-input">
         </div>
-        <p class="hint">از سال ۱۴۰۰ به جلو.</p>
       </div>
 
       <div class="control">
-        <label for="retirement_age">حداقل سابقه‌ی بازنشستگی (سال)</label>
+        <label for="retirement_age" title="سابقه‌ی پرداخت بیمه که بعد از آن فرد بازنشسته می‌شود.">حداقل سابقه‌ی بازنشستگی (سال)</label>
         <div class="control-row">
           <input type="range" id="retirement_age_slider" min="20" max="40" step="1">
           <input type="number" id="retirement_age" min="20" max="40" step="1" class="num-input">
         </div>
-        <p class="hint">سابقه‌ی پرداخت بیمه که بعد از آن فرد بازنشسته می‌شود.</p>
       </div>
 
       <div class="control" data-control="percent">
-        <label for="added_people_rate">نرخ ورود بیمه‌شدگان جدید</label>
+        <label for="added_people_rate" title="درصدی از جمعیت ۳۰ ساله که هر سال به بیمه می‌پیوندند.">نرخ ورود بیمه‌شدگان جدید</label>
         <div class="control-row">
           <input type="range" id="added_people_rate_slider" min="0" max="100" step="1">
           <input type="number" id="added_people_rate" min="0" max="100" step="0.1" class="num-input">
           <span class="unit">٪</span>
         </div>
-        <p class="hint">درصدی از جمعیت ۳۰ ساله که هر سال به بیمه می‌پیوندند.</p>
       </div>
 
       <div class="control" data-control="percent">
-        <label for="death_to_survivor_rate">نرخ تبدیل مرگ به بازمانده</label>
+        <label for="death_to_survivor_rate" title="به ازای هر فوت بیمه‌شده، چه نسبتی از بازماندگان حقوق می‌گیرند.">نرخ تبدیل مرگ به بازمانده</label>
         <div class="control-row">
           <input type="range" id="death_to_survivor_rate_slider" min="0" max="100" step="1">
           <input type="number" id="death_to_survivor_rate" min="0" max="100" step="0.1" class="num-input">
           <span class="unit">٪</span>
         </div>
-        <p class="hint">به ازای هر فوت بیمه‌شده، چه نسبتی از بازماندگان حقوق می‌گیرند.</p>
       </div>
     </fieldset>
 
@@ -125,9 +119,26 @@
   </section>
 
   <main class="charts">
-    <div class="chart-card chart-area">
-      <h2>توزیع جمعیتی کارمندان و بازنشسته‌ها</h2>
-      <div class="canvas-wrap"><canvas id="chart_population"></canvas></div>
+    <div class="charts-hero">
+      <div class="chart-card chart-hero">
+        <h2>ناترازی سالانه‌ی صندوق</h2>
+        <div class="canvas-wrap"><canvas id="chart_inbalance"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h2>ناترازی تجمعی از سال ۱۴۰۰</h2>
+        <div class="canvas-wrap"><canvas id="chart_inbalance_cumulative"></canvas></div>
+      </div>
+    </div>
+
+    <div class="charts-mid">
+      <div class="chart-card">
+        <h2>دریافتی صندوق در برابر تعهدات</h2>
+        <div class="canvas-wrap"><canvas id="chart_income_vs_obligation"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h2>توزیع جمعیتی کارمندان و بازنشسته‌ها</h2>
+        <div class="canvas-wrap"><canvas id="chart_population"></canvas></div>
+      </div>
     </div>
 
     <div class="charts-row">
@@ -142,10 +153,6 @@
       <div class="chart-card">
         <h2>نسبت بیمه‌شده به بازنشسته</h2>
         <div class="canvas-wrap"><canvas id="chart_ratio"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <h2>ناترازی صندوق</h2>
-        <div class="canvas-wrap"><canvas id="chart_inbalance"></canvas></div>
       </div>
     </div>
   </main>

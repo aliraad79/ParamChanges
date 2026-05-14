@@ -26,16 +26,7 @@ body {
   line-height: 1.5;
 }
 
-/* On wide screens, lay the whole page out so it fits in the viewport without
-   scrolling. Below the desktop breakpoint we fall back to natural flow. */
-@media (min-width: 1100px) {
-  body {
-    height: 100vh;
-    display: grid;
-    grid-template-rows: auto auto auto 1fr;
-    overflow: hidden;
-  }
-}
+/* Page scrolls naturally; no more "fit everything in viewport" gymnastics. */
 
 /* ---------- Top bar ---------- */
 .topbar {
@@ -80,61 +71,60 @@ body {
 .config-panel {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap);
-  padding: var(--gap) var(--pad-x) 0;
+  gap: 10px;
+  padding: 10px var(--pad-x) 0;
 }
 .config-section {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px 14px 12px;
+  border-radius: 8px;
+  padding: 6px 12px 8px;
   margin: 0;
   box-shadow: var(--shadow);
 }
 .config-section legend {
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted);
   padding: 0 6px;
+  text-transform: none;
 }
 
-.control { margin: 8px 0 0; }
-.control:first-of-type { margin-top: 4px; }
+.control { margin: 4px 0 0; }
+.control:first-of-type { margin-top: 2px; }
 .control > label:not(.toggle) {
   display: block;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--ink);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .control-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 .control-row input[type="range"] {
   flex: 1;
   min-width: 0;
+  height: 4px;
   accent-color: var(--accent);
 }
 .control-row .num-input {
-  width: 60px;
+  width: 52px;
   flex: 0 0 auto;
   font: inherit;
-  padding: 4px 6px;
+  padding: 2px 4px;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--bg);
   color: var(--ink);
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
 }
-.control-row .unit { color: var(--muted); font-size: 12px; }
+.control-row .unit { color: var(--muted); font-size: 11px; }
 .hint {
-  margin: 3px 0 0;
-  font-size: 10.5px;
-  color: var(--muted);
-  line-height: 1.35;
+  display: none;  /* Title attribute on the label serves as tooltip instead. */
 }
 
 /* Toggle switch */
@@ -198,16 +188,33 @@ body {
 /* ---------- Charts ---------- */
 .charts {
   display: grid;
-  grid-template-rows: minmax(0, 1.05fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1.35fr) minmax(0, 1.05fr) minmax(0, 1fr);
   gap: var(--gap);
   padding: var(--gap) var(--pad-x);
   min-height: 0;
 }
-.charts-row {
+.charts-hero {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1.6fr 1fr;
   gap: var(--gap);
   min-height: 0;
+}
+.charts-mid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+  min-height: 0;
+}
+.charts-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  min-height: 0;
+}
+.chart-hero h2 {
+  font-size: 13px;
+  color: var(--negative);
+  letter-spacing: 0.2px;
 }
 .chart-card {
   background: var(--panel);
@@ -248,9 +255,12 @@ body {
 @media (max-width: 1100px) {
   body { overflow: visible; }
   .config-panel { grid-template-columns: 1fr 1fr; }
+  .charts { grid-template-rows: none; }
+  .charts-hero,
+  .charts-mid,
   .charts-row { grid-template-columns: 1fr 1fr; }
   .chart-card { height: 260px; }
-  .chart-area { height: 300px; }
+  .chart-hero { height: 320px; }
 }
 
 @media (max-width: 760px) {
@@ -262,9 +272,11 @@ body {
   .charts { padding-inline: 16px; }
   .config-panel { grid-template-columns: 1fr; }
   .kpis { grid-template-columns: repeat(2, 1fr); }
+  .charts-hero,
+  .charts-mid,
   .charts-row { grid-template-columns: 1fr; }
   .chart-card,
-  .chart-area { height: 240px; }
+  .chart-hero { height: 240px; }
   .kpi-value { font-size: 17px; }
 }
 
@@ -274,5 +286,5 @@ body {
   .status { display: none; }
   .control-row .num-input { width: 60px; padding: 4px 6px; }
   .chart-card,
-  .chart-area { height: 220px; }
+  .chart-hero { height: 220px; }
 }
